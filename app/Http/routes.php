@@ -11,10 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/** Route Partial Map
+ * Carrega os arquivos de rotas especificados no array '$route_partials'.
+====================================================================== */
 
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
+//ORDER MATTERS!
+$route_partials = [
+    'Admin',
+    'Doador',
+    'Rotary',
+    'Entidade',
+    'Commons',
+    'Init',
+];
+/** Route Partial Loadup
+====================================================================== */
+foreach ($route_partials as $partial) {
+    $file = __DIR__.'/Routes/'.$partial.'.php';
+    if ( !file_exists($file) )
+    {
+        $msg = "Route partial [{$partial}] not found!";
+        throw new Exception($msg);
+    }
+    require_once $file;
+}

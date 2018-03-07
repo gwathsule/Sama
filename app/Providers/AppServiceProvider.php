@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app['view']->addNamespace('panel', base_path() . '/app/Http/Views');
     }
 
     /**
