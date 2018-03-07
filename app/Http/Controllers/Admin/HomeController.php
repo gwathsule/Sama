@@ -23,6 +23,6 @@ class HomeController extends Controller
     }
 
     public function home(){
-        dd('home do admin');
+        return view('panel::admin.home');
     }
 }
