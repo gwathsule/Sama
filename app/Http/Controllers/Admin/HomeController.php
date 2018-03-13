@@ -25,4 +25,16 @@ class HomeController extends Controller
     public function home(){
         return view('panel::admin.home');
     }
+
+    public function new_index(){
+        return view('panel::admin.rotary.new');
+    }
+
+    public function edit_index(){
+        return view('panel::admin.rotary.list');
+    }
+
+    public function list_index(){
+        return view('panel::admin.rotary.edit');
+    }
 }
