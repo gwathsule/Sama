@@ -7,7 +7,8 @@
                 <h4>CADASTRO DE ROTARIANO</h4>
             </div>
             <div class="card-body">
-                <form class="form-horizontal">
+                <form action="{{route('admin.rotary.novo')}}"  method="post" class="form-horizontal">
+                    {{ csrf_field() }}
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">NOME</label>
                         <div class="col-sm-10">
@@ -29,7 +30,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">CELULAR</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="celular" placeholder="27991234567" maxlength="12" minlength="10" required>
+                            <input type="text" class="form-control" name="celular" placeholder="27991234567" maxlength="11" minlength="10" required>
                         </div>
                     </div>
                     <div class="form-group row">
