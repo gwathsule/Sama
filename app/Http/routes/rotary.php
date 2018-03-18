@@ -5,7 +5,7 @@
  * Date: 26/02/2018
  * Time: 21:28
  */
-Route::group(['middleware' => ['web', 'checaPermissao:rotary'] ,'prefix' => 'painel/rotary'], function () {
+Route::group(['middleware' => ['checaPermissao:rotary'] ,'prefix' => 'painel/rotary'], function () {
 
     Route::get('/', 'PanelController@homeRotary');
     Route::get('/home',     ['as' => 'rotary.home',      'uses' => 'Rotary\HomeController@home']);

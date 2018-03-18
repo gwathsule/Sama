@@ -117,5 +117,15 @@
 <script src="{{asset('/assets/dash/js/charts-home.js')}}"></script>
 <!-- Main File-->
 <script src="{{asset('/assets/dash/js/front.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        document.getElementById("btn_modal_errors").click();
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        document.getElementById("btn_modal_sucess").click();
+    });
+</script>
 </body>
 </html>
