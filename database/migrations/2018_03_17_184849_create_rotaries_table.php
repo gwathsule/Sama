@@ -14,9 +14,11 @@ class CreateRotariesTable extends Migration
     {
         Schema::create('rotaries', function (Blueprint $table) {
             $table->increments('id');
-            //$table->unsignedInteger('user_id');
-            $table->string('cpf', 11);
+            $table->unsignedInteger('user_id');
+            $table->string('cpf', 11)->unique();
             $table->string('celular', 11);
+            $table->string('name');
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

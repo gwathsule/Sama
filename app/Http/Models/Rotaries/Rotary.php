@@ -2,13 +2,13 @@
 
 namespace App\Http\Models\Rotaries;
 
-use App\Http\Models\Users\User;
+use Illuminate\Database\Eloquent\Model;
 
 
-class Rotary extends User
+class Rotary extends Model
 {
     protected $fillable = [
-        'cpf',
+        'name', 'email', 'cpf', 'celular', 'user_id'
     ];
     
 }

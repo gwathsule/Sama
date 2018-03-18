@@ -11,5 +11,11 @@ namespace App\Http\Models\Users;
 
 class UserRepository
 {
-
+    public function getById($idUser){
+        try{
+            return User::query()->find($idUser);
+        } catch (Exception $e){
+            throw new Exception('Erro ao recuperar user do banco: ' . $e->getMessage());
+        }
+    }
 }
