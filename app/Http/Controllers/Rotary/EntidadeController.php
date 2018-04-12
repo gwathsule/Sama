@@ -9,42 +9,42 @@
 namespace App\Http\Controllers\Rotary;
 
 use App\Http\Controllers\Controller;
+use App\Http\Models\Entidades\EntidadeRepository;
 use Illuminate\Http\Request;
 use Exception;
 
 class EntidadeController  extends Controller
 {
     protected $request;
-   // protected  $entidadeDB;
+    protected  $entidadeDB;
 
-    public function __construct(Request $request/*, EntidadeRepository $entidadeDB*/)
+    public function __construct(Request $request, EntidadeRepository $entidadeDB)
     {
         $this->middleware('auth');
         $this->middleware('verificaFuncao');
         $this->request = $request;
-        //$this->entidadeDB = $entidadeDB;
+        $this->entidadeDB = $entidadeDB;
     }
 
     public function novo(){
-        dd('novo');
-        /*try {
-            $validator = $this->rotaryDB->validarNovo($this->request);
+        try {
+            $validator = $this->entidadeDB->validarNovo($this->request);
 
             if ($validator->fails()) {
                 return back()
                     ->withErrors($validator)
                     ->withInput();
             }
-
-            $this->rotaryDB->novo($this->request);
+            
+            $this->entidadeDB->novo($this->request);
 
             return back()
-                ->with('success', 'Usuário Rotary cadastrado com sucesso');
+                ->with('success', 'Entidade cadastrada com sucesso');
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage())
                 ->withInput();
-        }*/
+        }
     }
 
     public function editar(){

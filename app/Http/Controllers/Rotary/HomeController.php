@@ -35,8 +35,7 @@ class HomeController extends Controller
     }
 
     public function new_entidade_index(){
-        dd('nova entidade');
-        //return view('panel::rotary.entidade.new');
+        return view('panel::rotary.entidade.new');
     }
 
     public function edit_entidade_index($idUsuario){

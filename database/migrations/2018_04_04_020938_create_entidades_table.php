@@ -14,11 +14,6 @@ class CreateEntidadesTable extends Migration
     {
         Schema::create('entidades', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('endereco_id')->nullable();
-            $table->foreign('endereco_id')
-                ->references('id')
-                ->on('enderecos')
-                ->onDelete('cascade');
             $table->string('name');
             $table->string('email')->unique();
             $table->unsignedInteger('user_id');
