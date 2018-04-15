@@ -8,26 +8,29 @@
  */
 namespace App\Http\Controllers\Rotary;
 
+use App\Http\Models\Entidades\EntidadeRepository;
+use App\Http\Models\Users\UserRepository;
 use Exception;
 use App\Http\Controllers\Controller;
-use App\Http\Models\Rotaries\RotaryRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
 
     protected $request;
-    //protected  $entidadeDB;
+    protected  $entidadeDB;
+    protected  $userDB;
 
     /**
      * HomeController constructor.
      */
-    public function __construct(Request $request/*, RotaryRepository $rotaryDB*/)
+    public function __construct(Request $request, EntidadeRepository $entidadeDB, UserRepository $userDB)
     {
         $this->middleware('auth');
         $this->middleware('verificaFuncao');
         $this->request = $request;
-        //$this->entidadeDB = $rotaryDB;
+        $this->entidadeDB = $entidadeDB;
+        $this->userDB = $userDB;
     }
 
     public function home(){
@@ -39,24 +42,23 @@ class HomeController extends Controller
     }
 
     public function edit_entidade_index($idUsuario){
-        dd('editar entidade');
-        /*try {
-            $usuario = $this->entidadeDB->getById($idUsuario);
-            return view('panel::rotary.entidade.edit', compact('usuario'));
+        try {
+            $entidade = $this->entidadeDB->getById($idUsuario);
+            $user = $this->userDB->getById($entidade->user_id);
+            return view('panel::rotary.entidade.edit', compact('entidade', 'user'));
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
-        }*/
+        }
     }
 
     public function list_entidade_index(){
-        dd('listar entidade');
-        /*try{
+        try{
             $lista = $this->entidadeDB->listar();
             return view('panel::rotary.entidade.list', compact('lista'));
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
-        }*/
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Rotary;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\Entidades\EntidadeRepository;
+use App\Http\Models\Users\UserRepository;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -17,13 +18,15 @@ class EntidadeController  extends Controller
 {
     protected $request;
     protected  $entidadeDB;
+    protected $userDB;
 
-    public function __construct(Request $request, EntidadeRepository $entidadeDB)
+    public function __construct(Request $request, EntidadeRepository $entidadeDB, UserRepository $userDB)
     {
         $this->middleware('auth');
         $this->middleware('verificaFuncao');
         $this->request = $request;
         $this->entidadeDB = $entidadeDB;
+        $this->userDB = $userDB;
     }
 
     public function novo(){
@@ -48,11 +51,10 @@ class EntidadeController  extends Controller
     }
 
     public function editar(){
-        dd('editar');
-        /*try{
+        try{
             $info_alteradas = $this->getInfoAlteradas($this->request);
 
-            $validator = $this->rotaryDB->validarEdicao($info_alteradas);
+            $validator = $this->entidadeDB->validarEdicao($info_alteradas);
 
             if ($validator->fails()) {
                 return back()
@@ -60,14 +62,14 @@ class EntidadeController  extends Controller
                     ->withInput();
             }
 
-            $this->rotaryDB->editar($info_alteradas, $this->request->id);
+            $this->entidadeDB->editar($info_alteradas, $this->request->id);
 
             return back()
                 ->with('success', 'Usuário alterado com sucesso!');
         } catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
-        }*/
+        }
     }
 
     /**
@@ -77,22 +79,30 @@ class EntidadeController  extends Controller
      * @throws Exception
      */
     private function getInfoAlteradas(Request $request){
-        dd('getInfo alteradas');
-        /*
-        $old_rotary = $this->rotaryDB->getById($request->id);
-
+        $old_entidade = $this->entidadeDB->getById($request->id);
+        $old_user = $this->userDB->getById($old_entidade->user_id);
+        $old_endereco_principal = $old_user->enderecos()->first();
         //monta um array com as informações que foram alteradas:
         $info_alteradas = array();
-        if(strcmp($old_rotary->name, $request->nome) != 0)
+        if(strcmp($old_entidade->name, $request->nome) != 0)
             $info_alteradas['nome'] = $request->nome;
 
-        if(strcmp($old_rotary->email, $request->email) != 0)
+        if(strcmp($old_entidade->email, $request->email) != 0)
             $info_alteradas['email'] = $request->email;
 
-        if(strcmp($old_rotary->cpf, $request->cpf) != 0)
-            $info_alteradas['cpf'] = $request->cpf;
+        if(strcmp($old_entidade->cnpj, $request->cnpj) != 0)
+            $info_alteradas['cnpj'] = $request->cnpj;
 
-        if(strcmp($old_rotary->celular, $request->celular) != 0)
+        if(strcmp($old_entidade->finalidade, $request->finalidade) != 0)
+            $info_alteradas['finalidade'] = $request->finalidade;
+
+        if(strcmp($old_entidade->contato, $request->contato) != 0)
+            $info_alteradas['contato'] = $request->contato;
+
+        if(strcmp($old_entidade->telefone, $request->telefone) != 0)
+            $info_alteradas['telefone'] = $request->telefone;
+
+        if(strcmp($old_entidade->celular, $request->celular) != 0)
             $info_alteradas['celular'] = $request->celular;
 
         if(strcmp($this->request->password, '') != 0) {
@@ -100,21 +110,40 @@ class EntidadeController  extends Controller
             $info_alteradas['password_confirmation'] = $request->password_confirmation;
         }
 
+        if(strcmp($old_endereco_principal->cep, $request->cep) != 0)
+            $info_alteradas['cep'] = $request->cep;
+
+        if(strcmp($old_endereco_principal->logradouro, $request->logradouro) != 0)
+            $info_alteradas['logradouro'] = $request->logradouro;
+
+        if(strcmp($old_endereco_principal->numero, $request->numero) != 0)
+            $info_alteradas['numero'] = $request->numero;
+
+        if(strcmp($old_endereco_principal->bairro, $request->bairro) != 0)
+            $info_alteradas['bairro'] = $request->bairro;
+
+        if(strcmp($old_endereco_principal->cidade, $request->cidade) != 0)
+            $info_alteradas['cidade'] = $request->cidade;
+
+        if(strcmp($old_endereco_principal->uf, $request->uf) != 0)
+            $info_alteradas['uf'] = $request->uf;
+
+        if(strcmp($old_endereco_principal->pais, $request->pais) != 0)
+            $info_alteradas['pais'] = $request->pais;
+        
         return $info_alteradas;
-        */
     }
 
     public function excluir($idUsuario){
-        dd('excluir');
-        /*try{
+        try{
 
-            $this->rotaryDB->excluir($idUsuario);
+            $this->entidadeDB->excluir($idUsuario);
 
             return back()
                 ->with('success', 'Usuário excluído com sucesso');
         } catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
-        }*/
+        }
     }
 }

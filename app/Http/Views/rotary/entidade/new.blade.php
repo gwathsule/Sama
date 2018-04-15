@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">NOME</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nome" value="{{old('nome')}}" placeholder="Nome do colaborador" required>
+                            <input type="text" class="form-control" name="nome" value="{{old('nome')}}" placeholder="Nome da entidade" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -77,7 +77,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">RUA</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="rua" value="{{old('rua')}}" required>
+                            <input type="text" class="form-control" name="logradouro" value="{{old('logradouro')}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -98,11 +98,17 @@
                             <input type="text" class="form-control" name="uf" value="{{old('uf')}}" maxlength="2" minlength="2" required>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">PAÍS</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="pais" value="{{old('pais')}}" required>
+                        </div>
+                    </div>
                     <hr>
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">SENHA</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" name="password" required>
+                            <input type="password" class="form-control" name="password"  placeholder="Caso não deseje alterar a senha, não digite nada neste campo">
                         </div>
                     </div>
                     <div class="form-group row">
