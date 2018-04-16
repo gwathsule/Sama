@@ -17,8 +17,7 @@ class CreateEnderecosTable extends Migration
             $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
             $table->string('nome');
             $table->string('cep', '10')->nullable();
             $table->string('logradouro', '60')->nullable();
