@@ -13,7 +13,7 @@ Route::get('/register', function () {
     return back();
 });
 
-Route::group(['middleware' => ['web'], 'prefix' => '/'], function () {
+Route::group(['prefix' => '/'], function () {
     Route::get('/', 'PanelController@define_painel');
     Route::get('/painel', 'PanelController@define_painel');
     Route::get('/router-painel', 'PanelController@define_painel');

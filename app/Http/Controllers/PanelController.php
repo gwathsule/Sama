@@ -51,18 +51,18 @@ class PanelController extends Controller
     }
 
     public function homeAdmin(){
-        dd('home do admin');
+        return redirect(route('admin.home'));
     }
 
     public function homeDoador(){
-        dd('home do doador');
+        return redirect(route('doador.home'));
     }
 
     public function homeEntidade(){
-        dd('home da entidade');
+        return redirect(route('entidade.home'));
     }
 
     public function homeRotary(){
-        dd('home do rotary');
+        return redirect(route('rotary.home'));
     }
 }

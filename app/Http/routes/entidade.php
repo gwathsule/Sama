@@ -6,7 +6,7 @@
  * Date: 26/02/2018
  * Time: 21:28
  */
-Route::group(['middleware' => ['web', 'checaPermissao:entidade'] ,'prefix' => 'painel/entidade'], function () {
+Route::group(['middleware' => ['checaPermissao:entidade'] ,'prefix' => 'painel/entidade'], function () {
 
     Route::get('/', 'PanelController@homeEntidade');
     Route::get('/home',     ['as' => 'entidade.home',      'uses' => 'Entidade\HomeController@home']);

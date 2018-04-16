@@ -2,6 +2,7 @@
 
 namespace App\Http\Models\Users;
 
+use App\Http\Models\Enderecos\Endereco;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -35,6 +36,11 @@ class User extends Authenticatable
         if ($value == 6)
             return 'Admin';
         return 'Indefinido';
+    }
+
+    public function enderecos()
+    {
+        return $this->hasMany(Endereco::class);
     }
 
     /*Roles<>Permissions*/

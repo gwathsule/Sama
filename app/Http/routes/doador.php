@@ -6,7 +6,7 @@
  * Time: 21:28
  */
 
-Route::group(['middleware' => ['web', 'checaPermissao:doador'] ,'prefix' => 'painel/doador'], function () {
+Route::group(['middleware' => ['checaPermissao:doador'] ,'prefix' => 'painel/doador'], function () {
 
     Route::get('/', 'PanelController@homeDoador');
     Route::get('/home',     ['as' => 'doador.home',      'uses' => 'Doador\HomeController@home']);
