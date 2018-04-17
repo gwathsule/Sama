@@ -147,6 +147,39 @@ class EntidadeRepository
         DB::connection('mysql')->commit();
     }
 
+    public function criarDemanda($request){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $entidade = Entidade::query()->find($request->id);
+            $entidade->demandaMensal()->create([
+               'observacao' => $request->observacao,
+            ]);
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao criar demanda: ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function cadastrarProdutoDemanda($request){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $entidade = Entidade::query()->find($request->idEntidade);
+            $entidade->demandaMensal()->first()->produtos->create([
+                'nome' => $request->nome,
+                'descricao' => $request->descricao,
+                'qtd' => (int) $request->qtd,
+                'unidade' => (int) $request->unidade,
+                'categoria' => (int) $request->categoria,
+            ]);
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            dd('linha ' . $e->getLine() . 'file: ' . $e->getFile() . ' erro: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar produto para a demanda mensal: ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
     public function editar($nova_info, $idUsuario){
         DB::connection('mysql')->beginTransaction();
         try {

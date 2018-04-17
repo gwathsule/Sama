@@ -146,4 +146,26 @@ class EntidadeController  extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function novaDemanda(){
+        try{
+            $this->entidadeDB->criarDemanda($this->request);
+            return back()
+                ->with('success', 'Demanda cadastrada com sucesso');
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function cadastrarProdutoDemanda(){
+        try{
+            $this->entidadeDB->cadastrarProdutoDemanda($this->request);
+            return back()
+                ->with('success', 'Produto cadastrado com sucesso');
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }

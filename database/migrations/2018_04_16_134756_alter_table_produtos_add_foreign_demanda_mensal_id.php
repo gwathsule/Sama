@@ -13,8 +13,8 @@ class AlterTableProdutosAddForeignDemandaMensalId extends Migration
     public function up()
     {
         Schema::table('produtos', function (Blueprint $table) {
-            $table->unsignedInteger('demandaMensal_id');
-            $table->foreign('demandaMensal_id')
+            $table->unsignedInteger('demanda_mensal_id');
+            $table->foreign('demanda_mensal_id')
                 ->references('id')
                 ->on('demanda_mensals');
         });
@@ -28,8 +28,8 @@ class AlterTableProdutosAddForeignDemandaMensalId extends Migration
     public function down()
     {
         Schema::table('produtos', function (Blueprint $table) {
-            $table->dropForeign('produtos_demandamensal_id_foreign');
-            $table->dropColumn('demandaMensal_id');
+            $table->dropForeign('produtos_demanda_mensal_id_foreign');
+            $table->dropColumn('demanda_mensal_id');
         });
     }
 }
