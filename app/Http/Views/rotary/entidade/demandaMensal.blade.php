@@ -23,7 +23,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{$entidade->id}}">
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">FINALIDADE</label>
+                            <label class="col-sm-2 form-control-label">OBSERVAÇÃO</label>
                             <div class="col-sm-10">
                                 <textarea name="observacao" maxlength="2000" placeholder="Há alguma observação ao criar uma demanda mensal para esta entidade?" class="form-control"></textarea>
                             </div>

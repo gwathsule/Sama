@@ -2,6 +2,7 @@
 
 namespace App\Http\Models\Entidades;
 
+use App\Http\Models\Pedidos\Pedido;
 use Illuminate\Database\Eloquent\Model;
 
 class Entidade extends Model
@@ -13,5 +14,10 @@ class Entidade extends Model
     public function demandaMensal()
     {
         return $this->hasOne(DemandaMensal::class);
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class);
     }
 }

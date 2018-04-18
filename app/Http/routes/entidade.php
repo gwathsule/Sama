@@ -10,5 +10,8 @@ Route::group(['middleware' => ['checaPermissao:entidade'] ,'prefix' => 'painel/e
 
     Route::get('/', 'PanelController@homeEntidade');
     Route::get('/home',     ['as' => 'entidade.home',      'uses' => 'Entidade\HomeController@home']);
-    //Route::get('/perfil',   ['as' => 'admin.perfil',    'uses' => 'PanelController@perfilAdmin']);
+
+    //pages
+    Route::get('/home/new/necessidade',  ['as' => 'entidade.home.new.necessidade',  'uses' => 'Entidade\HomeController@new_necessidade_index']);
+    Route::get('/home/list/necessidade', ['as' => 'entidade.home.list.necessidade', 'uses' => 'Entidade\HomeController@list_necessidade_index']);
 });

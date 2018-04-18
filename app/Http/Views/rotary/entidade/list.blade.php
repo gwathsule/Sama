@@ -20,7 +20,7 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th width="50%">Nome</th>
+                                            <th width="35%">Nome</th>
                                             <th>CPF</th>
                                             <th>Celular</th>
                                             <th>Email</th>
