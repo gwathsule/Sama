@@ -148,24 +148,34 @@ class EntidadeRepository
     }
 
     public function criarDemanda($request){
-        DB::connection('mysql')->beginTransaction();
+        $demanda = null;
         try {
             $entidade = Entidade::query()->find($request->id);
+            
             $entidade->demandaMensal()->create([
                'observacao' => $request->observacao,
             ]);
+
+            $pedido = $entidade->demandaMensal()->first()->pedido()->create([
+                'status' => 1,
+                'caminho_foto' => 'dsdsd',
+                'dataPrecisao' => date_create(),
+            ]);
+
+            dd($pedido);
+
         } catch (Exception $e){
-            DB::connection('mysql')->rollBack();
             throw new Exception('Erro ao criar demanda: ' . $e->getMessage());
         }
-        DB::connection('mysql')->commit();
+
     }
 
     public function cadastrarProdutoDemanda($request){
         DB::connection('mysql')->beginTransaction();
         try {
             $entidade = Entidade::query()->find($request->idEntidade);
-            $entidade->demandaMensal()->first()->produtos()->create([
+
+            $entidade->demandaMensal()->first()->pedido()->first()->produtos()->create([
                 'nome' => $request->nome,
                 'descricao' => $request->descricao,
                 'qtd' => (int) $request->qtd,
@@ -183,7 +193,7 @@ class EntidadeRepository
         DB::connection('mysql')->beginTransaction();
         try {
             $entidade = Entidade::query()->find($idEntidade);
-            $produto = $entidade->demandaMensal()->first()->produtos()->find($idProduto);
+            $produto = $entidade->demandaMensal()->first()->pedido()->first()->produtos()->find($idProduto);
             $produto->delete();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();

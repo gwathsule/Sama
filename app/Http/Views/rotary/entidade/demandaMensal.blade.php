@@ -132,7 +132,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($entidade->demandaMensal()->first()->produtos()->get() as $produto)
+                                    @php
+                                        $produtos = $entidade->demandaMensal()->first()->pedido()->first()->produtos()->all();
+                                        dd($produtos);
+                                    @endphp
+                                    @foreach ($produtos as $produto)
                                         <tr>
                                             <th scope="row">{{$produto->id}}</th>
                                             <td>{{$produto->nome}}</td>

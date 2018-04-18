@@ -2,7 +2,7 @@
 
 namespace App\Http\Models\Entidades;
 
-use App\Pedido;
+use App\Http\Models\Pedidos\Pedido;
 use Illuminate\Database\Eloquent\Model;
 
 class DemandaMensal extends Model
