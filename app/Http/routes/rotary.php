@@ -23,4 +23,5 @@ Route::group(['middleware' => ['checaPermissao:rotary'] ,'prefix' => 'painel/rot
     Route::get('/entidade/excluir/{idUsuario}',         ['as' => 'rotary.entidade.excluir',             'uses' => 'Rotary\EntidadeController@excluir']);
     Route::post('/entidade/novaDemanda/',               ['as' => 'rotary.entidade.novaDemanda',         'uses' => 'Rotary\EntidadeController@novaDemanda']);
     Route::post('/entidade/demanda/novoProduto',        ['as' => 'rotary.entidade.demanda.novoProduto', 'uses' => 'Rotary\EntidadeController@cadastrarProdutoDemanda']);
+    Route::get('/entidade/demanda/excluirProduto/{idEntidade}/{idProduto}', ['as' => 'rotary.entidade.demanda.excluirProduto', 'uses' => 'Rotary\EntidadeController@excluirProduto']);
 });

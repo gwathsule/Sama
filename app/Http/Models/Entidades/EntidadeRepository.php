@@ -165,7 +165,7 @@ class EntidadeRepository
         DB::connection('mysql')->beginTransaction();
         try {
             $entidade = Entidade::query()->find($request->idEntidade);
-            $entidade->demandaMensal()->first()->produtos->create([
+            $entidade->demandaMensal()->first()->produtos()->create([
                 'nome' => $request->nome,
                 'descricao' => $request->descricao,
                 'qtd' => (int) $request->qtd,
@@ -174,7 +174,19 @@ class EntidadeRepository
             ]);
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            dd('linha ' . $e->getLine() . 'file: ' . $e->getFile() . ' erro: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar produto para a demanda mensal: ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function excluirProdutoDemanda($idEntidade, $idProduto){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $entidade = Entidade::query()->find($idEntidade);
+            $produto = $entidade->demandaMensal()->first()->produtos()->find($idProduto);
+            $produto->delete();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
             throw new Exception('Erro ao cadastrar produto para a demanda mensal: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();

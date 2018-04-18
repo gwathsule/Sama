@@ -110,8 +110,73 @@
                             <input type="submit" value="Cadastrar novo produto" class="mr-3 btn btn-primary">
                         </div>
                     </form>
-                @endif
             </div>
+
+            <div class="card-body">
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Compact Table</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nome</th>
+                                        <th>Quantidade</th>
+                                        <th>Unidade</th>
+                                        <th>Categoria</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($entidade->demandaMensal()->first()->produtos()->get() as $produto)
+                                        <tr>
+                                            <th scope="row">{{$produto->id}}</th>
+                                            <td>{{$produto->nome}}</td>
+                                            <td>{{$produto->qtd}}</td>
+                                            <td>{{$produto->unidade}}</td>
+                                            <td>{{$produto->categoria}}</td>
+                                            <td>
+                                                <button type="button" class="btn-danger" data-toggle="modal" data-target="#modal_delete_{{$produto->id}}" title="Excluir">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <div class="modal fade " id="modal_delete_{{$produto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+                                            <div class="modal-dialog modal-dialog-centered " role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <ul>
+                                                            <li><strong>ID: </strong>{{$produto->id}}</li>
+                                                            <li><strong>Nome: </strong>{{$produto->nome}}</li>
+                                                        </ul>
+                                                        <h4 class="align-items-center">EXCLUIR O PRODUTO COM AS INFORMAÇÕES ACIMA?</h4>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="{{route('rotary.entidade.demanda.excluirProduto', ['idEntidade' => $entidade->id, 'idProduto' => $produto->id])}}"><button class="btn btn-danger">Excluir</button></a>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 @endsection

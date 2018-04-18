@@ -9,5 +9,4 @@
     </ul>
 </li>
 <li><a href="#"> <i class="fa fa-heart-o"></i>Doações</a></li>
-<li><a href="#"> <i class="fa fa-heartbeat"></i>Necessidade</a></li>
 <li><a href="#"> <i class="fa fa-archive"></i>Estoque</a></li>

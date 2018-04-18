@@ -168,4 +168,17 @@ class EntidadeController  extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function excluirProduto($idEntidade, $idProduto){
+        try{
+
+            $this->entidadeDB->excluirProdutoDemanda($idEntidade, $idProduto);
+
+            return back()
+                ->with('success', 'Produto excluído com sucesso');
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }
