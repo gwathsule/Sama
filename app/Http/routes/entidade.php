@@ -10,8 +10,9 @@ Route::group(['middleware' => ['checaPermissao:entidade'] ,'prefix' => 'painel/e
 
     Route::get('/', 'PanelController@homeEntidade');
     Route::get('/home',     ['as' => 'entidade.home',      'uses' => 'Entidade\HomeController@home']);
-
-    //pages
-    Route::get('/home/new/necessidade',  ['as' => 'entidade.home.new.necessidade',  'uses' => 'Entidade\HomeController@new_necessidade_index']);
-    Route::get('/home/list/necessidade', ['as' => 'entidade.home.list.necessidade', 'uses' => 'Entidade\HomeController@list_necessidade_index']);
+    Route::get('/home/list/necessidade', ['as' => 'entidade.home.list.necessidade', 'uses' => 'Entidade\HomeController@list_pedido_index']);
+    
+    //pedidos
+    Route::post('/pedido/novo', ['as' => 'entidade.pedido.novo', 'uses' => 'Entidade\PedidoController@novo']);
+    Route::get('/pedido/excluir/{idEntidade}/{idPedido}', ['as' => 'entidade.pedido.excluir', 'uses' => 'Entidade\PedidoController@excluir']);
 });

@@ -13,6 +13,7 @@ use App\Http\Models\Users\UserRepository;
 use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -36,31 +37,14 @@ class HomeController extends Controller
         return view('panel::entidade.home');
     }
 
-    public function new_necessidade_index(){
-        dd('new.index em manutenção');
-        //return view('panel::rotary.entidade.new');
-    }
-
-    public function list_necessidade_index(){
-        dd('list.index em manutenção');
-        /*try{
-            $lista = $this->entidadeDB->listar();
-            return view('panel::rotary.entidade.list', compact('lista'));
+    public function list_pedido_index(){
+        try{
+            $entidade = $this->entidadeDB->getByUserId(Auth::user()->id);
+            $lista = $this->entidadeDB->listarPedidos($entidade->id);
+            return view('panel::entidade.listaPedidos', compact('lista', 'entidade'));
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
-        }*/
-    }
-
-    public function edit_necessidade_index($idUsuario){
-        dd('edit.index em manutenção');
-        /*try {
-            $entidade = $this->entidadeDB->getById($idUsuario);
-            $user = $this->userDB->getById($entidade->user_id);
-            return view('panel::rotary.entidade.edit', compact('entidade', 'user'));
-        }catch (Exception $e){
-            return back()
-                ->withErrors($e->getMessage());
-        }*/
+        }
     }
 }

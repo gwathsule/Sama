@@ -133,6 +133,10 @@ class EntidadeRepository
         }
     }
 
+    public function getByUserId($userId){
+        return Entidade::query()->where('user_id','=', $userId)->first();
+    }
+
     public function excluir($idEntidade){
         DB::connection('mysql')->beginTransaction();
         try {
@@ -152,19 +156,11 @@ class EntidadeRepository
         try {
             $entidade = Entidade::query()->find($request->id);
             
-            $entidade->demandaMensal()->create([
+            $demanda = $entidade->demandaMensal()->create([
                'observacao' => $request->observacao,
             ]);
-
-            $pedido = $entidade->demandaMensal()->first()->pedido()->create([
-                'status' => 1,
-                'caminho_foto' => 'dsdsd',
-                'dataPrecisao' => date_create(),
-            ]);
-
-            dd($pedido);
-
         } catch (Exception $e){
+            dd($e);
             throw new Exception('Erro ao criar demanda: ' . $e->getMessage());
         }
 
@@ -175,7 +171,7 @@ class EntidadeRepository
         try {
             $entidade = Entidade::query()->find($request->idEntidade);
 
-            $entidade->demandaMensal()->first()->pedido()->first()->produtos()->create([
+            $entidade->demandaMensal()->first()->produtos()->create([
                 'nome' => $request->nome,
                 'descricao' => $request->descricao,
                 'qtd' => (int) $request->qtd,
@@ -193,11 +189,72 @@ class EntidadeRepository
         DB::connection('mysql')->beginTransaction();
         try {
             $entidade = Entidade::query()->find($idEntidade);
-            $produto = $entidade->demandaMensal()->first()->pedido()->first()->produtos()->find($idProduto);
+            $produto = $entidade->demandaMensal()->first()->produtos()->find($idProduto);
             $produto->delete();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
             throw new Exception('Erro ao cadastrar produto para a demanda mensal: ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function listarPedidos($idEntidade){
+        try{
+            $entidade = Entidade::query()->find($idEntidade);
+            return $entidade->pedidos->all();
+        } catch (Exception $e){
+            throw new Exception('Erro ao cadastrar produto para a demanda mensal: ' . $e->getMessage());
+        }
+    }
+
+    public function validarNovoPedido(Request $request){
+        return
+            Validator::make($request->all(), [
+                'nome' => 'required|max:255',
+                'descricao' => '',
+                'qtd' => 'required|numeric',
+                'unidade' => 'required',
+                'categoria' => 'required',
+                'dataPrecisao' => 'required|date',
+            ]);
+    }
+
+    public  function novoPedido(Request $request){
+
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $entidade = Entidade::query()->find($request->idEntidade);
+            $pedido = $entidade->pedidos()->create([
+                'dataPrecisao' => $request->dataPrecisao,
+                'status' => 1,
+                'caminho_foto' => null,
+            ]);
+            $pedido->produto()->create([
+                'nome' => $request->nome,
+                'descricao' => $request->descricao,
+                'qtd' => (int) $request->qtd,
+                'unidade' => (int) $request->unidade,
+                'categoria' => (int) $request->categoria,
+            ]);
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao cadastrar : ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function excluirPedido($idEntidade, $idPedido){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $entidade = Entidade::query()->find($idEntidade);
+            $pedido = $entidade->pedidos()->find($idPedido);
+            $produto = $pedido->produto()->first();
+
+            $produto->delete();
+            $pedido->delete();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao deletar : ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
     }
@@ -208,8 +265,6 @@ class EntidadeRepository
             $user_entidade = Entidade::query()->find($idUsuario);
             $user = User::query()->find($user_entidade->user_id);
             $endereco = $user->enderecos()->first();
-
-            dd($endereco);
 
             if(isset($nova_info['nome'])){
                 $user_entidade->name = $nova_info['nome'];

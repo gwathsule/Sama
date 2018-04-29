@@ -133,8 +133,8 @@
                                     </thead>
                                     <tbody>
                                     @php
-                                        $produtos = $entidade->demandaMensal()->first()->pedido()->first()->produtos()->all();
-                                        dd($produtos);
+                                        $demanda = $entidade->demandaMensal()->first();
+                                        $produtos = $demanda->produtos()->get();
                                     @endphp
                                     @foreach ($produtos as $produto)
                                         <tr>

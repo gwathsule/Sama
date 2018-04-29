@@ -14,17 +14,13 @@ class Pedido extends Model
 
     public function getStatusAttribute($value)
     {
-        if ($value == 1) return 'Em Aberto';
-        if ($value == 3) return 'Fechado';
+        if ($value == 1) return 'Aguardando aprovação';
+        if ($value == 2) return 'Aprovado';
         return 'Indefinido';
     }
 
-    public function produtos()
+    public function produto()
     {
-        return $this->hasMany(Produto::class);
-    }
-
-    public function doacoes(){
-        return $this->hasMany(Doacao::class);
+        return $this->hasOne(Produto::class);
     }
 }
