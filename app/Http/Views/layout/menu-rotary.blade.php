@@ -8,6 +8,6 @@
         <li><a href="{{route('rotary.home.list.entidade')}}">Listar</a></li>
     </ul>
 </li>
+<li><a href="{{route('rotary.home.necessidades.novas')}}"> <i class="fa fa-hourglass"></i>Necessidades</a></li>
 <li><a href="#"> <i class="fa fa-heart-o"></i>Doações</a></li>
-<li><a href="#"> <i class="fa fa-heartbeat"></i>Necessidade</a></li>
 <li><a href="#"> <i class="fa fa-archive"></i>Estoque</a></li>

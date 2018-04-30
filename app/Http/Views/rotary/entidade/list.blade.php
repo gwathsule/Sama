@@ -20,7 +20,7 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th width="50%">Nome</th>
+                                            <th width="35%">Nome</th>
                                             <th>CPF</th>
                                             <th>Celular</th>
                                             <th>Email</th>
@@ -36,11 +36,18 @@
                                                 <td>{{$entidade->celular}}</td>
                                                 <td>{{$entidade->email}}</td>
                                                 <td>
+                                                    <a href="{{route('rotary.entidade.demandaMensal', ['idEntidade' => $entidade->id])}}">
+                                                        <button class="btn-primary" title="Cadastrar Demanda mensal">
+                                                            <i class="fa fa-calendar-plus-o"></i>
+                                                        </button>
+                                                    </a>
+
                                                     <a href="{{route('rotary.home.edit.entidade', ['idEntidade' => $entidade->id])}}">
                                                         <button class="btn-primary" title="Editar">
                                                             <i class="fa fa-pencil"></i>
                                                         </button>
                                                     </a>
+
                                                     <button type="button" class="btn-danger" data-toggle="modal" data-target="#modal_delete_{{$entidade->id}}" title="Excluir">
                                                         <i class="fa fa-trash"></i>
                                                     </button>

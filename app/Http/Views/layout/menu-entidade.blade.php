@@ -1,7 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Rafael
- * Date: 08/03/2018
- * Time: 20:23
- */
+<h5 class="sidenav-heading">MENU</h5>
+<li><a href="{{route('entidade.home.list.necessidade')}}"> <i class="fa fa-list"></i>Necessidades</a></li>
+<li><a href="#"> <i class="fa fa-info-circle"></i>Informações</a></li>

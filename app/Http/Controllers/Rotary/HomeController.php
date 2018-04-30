@@ -61,4 +61,25 @@ class HomeController extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function demandaMensal($idEntidade){
+        try{
+            $entidade = $this->entidadeDB->getById($idEntidade);
+            return view('panel::rotary.entidade.demandaMensal', compact('entidade'));
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public  function novas_necessidades(){
+        try{
+            $pedidos = $this->entidadeDB->getAllNovosPedidos();
+            return view('panel::rotary.novas_necessidades', compact('pedidos'));
+        } catch (Exception $e){
+            dd($e->getMessage());
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }
