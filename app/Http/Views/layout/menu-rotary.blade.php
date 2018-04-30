@@ -9,4 +9,5 @@
     </ul>
 </li>
 <li><a href="#"> <i class="fa fa-heart-o"></i>Doações</a></li>
+<li><a href="{{route('rotary.home.list.necessidades')}}"> <i class="fa fa-heart-o"></i>Necessidades</a></li>
 <li><a href="#"> <i class="fa fa-archive"></i>Estoque</a></li>
