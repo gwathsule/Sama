@@ -15,7 +15,8 @@ class Pedido extends Model
     public function getStatusAttribute($value)
     {
         if ($value == 1) return 'Aguardando aprovação';
-        if ($value == 2) return 'Aprovado';
+        if ($value == 2) return 'Não aprovado';
+        if ($value == 3) return 'Aprovado';
         return 'Indefinido';
     }
 

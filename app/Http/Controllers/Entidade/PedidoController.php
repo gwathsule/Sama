@@ -49,7 +49,7 @@ class PedidoController extends Controller
     public function excluir($idEntidade, $idPedido){
         try {
             
-            $this->entidadeDB->excluirPedido($idEntidade, $idPedido);
+            $this->entidadeDB->excluirPedido($idPedido);
 
             return back()->with('success', 'Necessidade apagada com sucesso');
         }catch (Exception $e){

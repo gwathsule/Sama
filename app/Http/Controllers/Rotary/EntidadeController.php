@@ -181,4 +181,43 @@ class EntidadeController  extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function aprovarPedido($idPedido){
+        try{
+
+            $this->entidadeDB->aprovarPedido($idPedido);
+
+            return back()
+                ->with('success', 'Produto aprovado com sucesso');
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function desaprovarPedido($idPedido){
+        try{
+
+            $this->entidadeDB->desaprovarPedido($idPedido);
+
+            return back()
+                ->with('success', 'Produto desaprovado com sucesso');
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function excluirPedido($idPedido){
+        try{
+
+            $this->entidadeDB->excluirPedido($idPedido);
+
+            return back()
+                ->with('success', 'Produto excluído com sucesso');
+        } catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }

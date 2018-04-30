@@ -12,25 +12,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="PHP">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/classpreloader/classpreloader" />
-          <root url="file://$MODULE_DIR$/vendor/jeremeamia/SuperClosure" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/dom-crawler" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php56" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-util" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/yaml" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/classpreloader/classpreloader" />
-          <root url="file://$MODULE_DIR$/vendor/jeremeamia/SuperClosure" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/dom-crawler" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php56" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-util" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/yaml" />
-        </SOURCES>
-      </library>
-    </orderEntry>
   </component>
 </module>

@@ -8,6 +8,7 @@
 
 namespace App\Http\Models\Entidades;
 
+use App\Http\Models\Pedidos\Pedido;
 use DB;
 use Validator;
 use Exception;
@@ -243,11 +244,10 @@ class EntidadeRepository
         DB::connection('mysql')->commit();
     }
 
-    public function excluirPedido($idEntidade, $idPedido){
+    public function excluirPedido($idPedido){
         DB::connection('mysql')->beginTransaction();
         try {
-            $entidade = Entidade::query()->find($idEntidade);
-            $pedido = $entidade->pedidos()->find($idPedido);
+            $pedido = Pedido::query()->find($idPedido);
             $produto = $pedido->produto()->first();
 
             $produto->delete();
@@ -257,6 +257,50 @@ class EntidadeRepository
             throw new Exception('Erro ao deletar : ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
+    }
+
+    public function aprovarPedido($idPedido){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $pedido = Pedido::query()->find($idPedido);
+            $pedido->status = 3;
+            $pedido->update();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao aprovar : ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function desaprovarPedido($idPedido){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $pedido = Pedido::query()->find($idPedido);
+            $pedido->status = 2;
+            $pedido->update();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao desaprovar : ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function getAllPedidos(){
+        try {
+            return Pedido::query()->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar necessidades : ' . $e->getMessage());
+        }
+    }
+
+    public function getAllNovosPedidos(){
+        try {
+            return Pedido::query()->where('status','=', 1)->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar necessidades : ' . $e->getMessage());
+        }
     }
 
     public function editar($nova_info, $idUsuario){
