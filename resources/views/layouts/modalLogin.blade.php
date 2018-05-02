@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-user"></i> Novo Cadastro</button>
+                <a href="{{url('cadastro')}}" class="btn btn-primary" target="_blank"><i class="fas fa-user"></i> Novo Cadastro</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
             </div>
         </div>

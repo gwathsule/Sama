@@ -5,7 +5,7 @@
 	</head>
 
     <body data-spy="scroll" data-offset="20" data-target="#navbar">
-	@include('layouts.doar-menu')
+	@include('layouts.menu-externo')
   
 	<!-- Modal Login -->
 	@include('layouts.modalLogin')
