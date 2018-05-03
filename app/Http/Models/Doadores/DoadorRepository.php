@@ -8,6 +8,10 @@
 
 namespace App\Http\Models\Doadores;
 
+use App\Http\Models\Users\Role;
+use App\Http\Models\Users\User;
+use DB;
+use Validator;
 use Illuminate\Http\Request;
 
 class DoadorRepository
@@ -22,6 +26,7 @@ class DoadorRepository
                 'cpf' => 'max:14',
                 'razao' => 'max:255',
                 'cnpj' => 'max:19',
+                'contato' => 'max:255',
                 'logotipo' => 'file|image',
                 'cep' => 'required|max:255',
                 'rua' => 'required|max:255',
@@ -42,6 +47,7 @@ class DoadorRepository
                 'telefone' => 'required|max:14',
                 'nome' => 'max:255',
                 'cpf' => 'max:14',
+                'contato' => 'required|max:255',
                 'razao' => 'required|max:255',
                 'cnpj' => 'required|max:19',
                 'logotipo' => 'file|image',
@@ -63,14 +69,14 @@ class DoadorRepository
                 'name' => $request->nome,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'tipo' => 2,
+                'tipo' => 1,
             ]);
 
             $this->setRole($novo_user);
 
             $novo_user->enderecos()->create([
-                'cep' => $request->cep,
-                'logradouro' => $request->logradouro,
+                'cep' => $this->soNumero($request->cep),
+                'logradouro' => $request->rua,
                 'numero' => $request->numero,
                 'bairro' => $request->bairro,
                 'cidade' => $request->cidade,
@@ -79,21 +85,21 @@ class DoadorRepository
                 'nome' => 'Endereço Principal'
             ]);
 
-            $nova_entidade = Entidade::create([
+            $novo_doador = Doador::create([
+                'tipo' => 1,
                 'name' => $request->nome,
                 'email' => $request->email,
                 'user_id' => $novo_user->id,
-                'cnpj' => $request->cnpj,
-                'presidente' => $request->presidente,
-                'finalidade' => $request->finalidade,
-                'contato' => $request->contato,
-                'telefone' => $request->telefone,
-                'celular' => $request->celular,
+                'cpf' => $this->soNumero($request->cpf),
+                'cnpj' => null,
+                'telefone' => $this->soNumero($request->telefone),
+                'celular' => $this->soNumero($request->celular),
+                'logo_arquivo' => null,
             ]);
 
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            throw new Exception('Erro ao cadastrar nova Entidade: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar novo doador: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
     }
@@ -105,14 +111,14 @@ class DoadorRepository
                 'name' => $request->nome,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'tipo' => 2,
+                'tipo' => 1,
             ]);
 
             $this->setRole($novo_user);
 
             $novo_user->enderecos()->create([
-                'cep' => $request->cep,
-                'logradouro' => $request->logradouro,
+                'cep' => $this->soNumero($request->cep),
+                'logradouro' => $request->rua,
                 'numero' => $request->numero,
                 'bairro' => $request->bairro,
                 'cidade' => $request->cidade,
@@ -121,23 +127,49 @@ class DoadorRepository
                 'nome' => 'Endereço Principal'
             ]);
 
-            $nova_entidade = Entidade::create([
-                'name' => $request->nome,
+            $logo = $request->file('logotipo');
+            $nomeArquivo = null;
+
+            if($logo != null) {
+                if (env('LOGOTIPO_DIR') == null) {
+                    $caminho_logotipos = storage_path() . '/app/public/logotipos/';
+                } else {
+                    $caminho_logotipos = storage_path() . env('LOGOTIPO_DIR');
+                }
+                date_default_timezone_set('America/Sao_Paulo');
+                $nomeArquivo = 'logo_' . date_create()->getTimestamp() . '.' . $logo->getClientOriginalExtension();
+                $logo->move($caminho_logotipos, $nomeArquivo);
+                sleep(1);
+            }
+
+            $novo_doador = Doador::create([
+                'tipo' => 2,
+                'name' => $request->razao,
                 'email' => $request->email,
-                'user_id' => $novo_user->id,
-                'cnpj' => $request->cnpj,
-                'presidente' => $request->presidente,
-                'finalidade' => $request->finalidade,
                 'contato' => $request->contato,
-                'telefone' => $request->telefone,
-                'celular' => $request->celular,
+                'user_id' => $novo_user->id,
+                'cpf' => null,
+                'cnpj' => $this->soNumero($request->cnpj),
+                'telefone' => $this->soNumero($request->telefone),
+                'celular' => $this->soNumero($request->celular),
+                'logo_arquivo' => $nomeArquivo,
             ]);
 
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            throw new Exception('Erro ao cadastrar nova Entidade: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar novo doador tipo empresa: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
     }
 
+    private function setRole(User $user)
+    {
+        $roleRotary = Role::where('name', 'doador')->first();
+        $user->roles()->attach($roleRotary->id);
+    }
+
+
+    function soNumero($str) {
+        return preg_replace("/[^0-9]/", "", $str);
+    }
 }

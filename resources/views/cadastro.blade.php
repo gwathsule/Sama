@@ -28,7 +28,7 @@
         <div class="row center_div">
             <h4 class="subtitle">ENTRE COM AS INFORMAÇÕES NECESSÁRIAS :)</h4>
             <div class="container">
-                <form action="{{route('doador.cadastro')}}" class="" method="post">
+                <form action="{{route('doador.cadastro')}}" class="" enctype="multipart/form-data" method="post">
                     <div class="col-md-6">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -55,10 +55,10 @@
                         <hr>
 
                         <div class="form-group">
-                            <input id="tipoPessoaFisica" onchange="showInfoPessoaFisica()" name="tipoPessoa" value="pessoaFisica" type="radio" checked="" />
+                            <input id="rbTipoPessoaFisica" onchange="showInfoPessoaFisica()" name="tipoPessoa" value="pessoaFisica" type="radio" {{ ( old('tipoPessoa') == 'pessoaJuridica' )? '' : 'checked=""' }}/>
                             <label for="PessoaFisica" >Pessoa Física</label>
 
-                            <input id="tipoPessoaJuridica" onchange="showInfoPessoaJuridica()" name="tipoPessoa" value="pessoaJuridica" type="radio" />
+                            <input id="rbTipoPessoaJuridica" onchange="showInfoPessoaJuridica()" name="tipoPessoa" value="pessoaJuridica" type="radio" {{ ( old('tipoPessoa') == 'pessoaJuridica' )? 'checked=""' : '' }}/>
                             <label for="PessoaJuridica" >Pessoal Jurídida (empresa)</label>
                         </div>
 
@@ -78,11 +78,11 @@
                             </div>
                         </div>
 
-                        <div id="infoPessoaJuridica" style="display: none;">
+                        <div id="infoPessoaJuridica">
                             <div class="form-group">
                                 <div class="controls">
                                     <input name="razao" style="display:none">
-                                    <input type="text" class="form-control" placeholder="Nome da empresa" id="razao" name="razao" value="{{old('razao')}}" maxlength="11" autocomplete="off">
+                                    <input type="text" class="form-control" placeholder="Nome da empresa" id="razao" name="razao" value="{{old('razao')}}" autocomplete="off">
                                 </div>
                             </div>
 
@@ -90,6 +90,13 @@
                                 <div class="controls">
                                     <input name="cnpj" style="display:none">
                                     <input type="text" class="form-control" placeholder="CNPJ da empresa" id="cnpj" name="cnpj" value="{{old('cnpj')}}" maxlength="14" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="controls">
+                                    <input name="contato" style="display:none">
+                                    <input type="text" class="form-control" placeholder="Contato na empresa" id="contato" name="contato" value="{{old('contato')}}" autocomplete="off">
                                 </div>
                             </div>
 
@@ -163,9 +170,12 @@
                                 <input type="password" class="form-control" autocomplete="new-password" placeholder="Repita a senha" name="password_confirmation" maxlength="20" required>
                             </div>
                         </div>
-
-                        @if ($errors->getBag('default')->has('email'))
-                            <h5 class="text-danger" style="font-weight: bold">Senha ou email incorreto. Por favor tente novamente.</h5>
+                        @if (count($errors) > 0)
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <h5 class="text-danger" style="font-weight: bold">{{$error}}</h5>
+                                @endforeach
+                            </ul>
                         @endif
                         <button type="submit" id="bt_entrar" class="btn btn-lg btn-common">Cadastrar <i class="fas fa-sign-in-alt"></i></button><div id="success" style="color:#34495e;"></div>
                     </div>
@@ -208,6 +218,15 @@
 
 <!-- JS Page -->
 <script>
+
+    $( document ).ready(function() {
+        if($('#rbTipoPessoaFisica').prop("checked")){
+            showInfoPessoaFisica();
+        } else {
+            showInfoPessoaJuridica();
+        }
+    });
+
     function showInfoPessoaFisica(){
         document.getElementById('infoPessoaFisica').style.display ='block';
         document.getElementById('infoPessoaJuridica').style.display ='none';

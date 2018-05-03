@@ -29,7 +29,6 @@ class PublicController extends Controller
 
     public function cadastro(){
         try {
-            dd($this->request->toArray());
             if(strcmp($this->request->tipoPessoa, 'pessoaFisica') == 0){
                 $validator = $this->doadorDB->validarNovaPessoaFisica($this->request);
 
@@ -47,7 +46,7 @@ class PublicController extends Controller
                         ->withErrors($validator)
                         ->withInput();
                 }
-                $this->doadorDB->novaPessoaFisica($this->request);
+                $this->doadorDB->novaPessoaJuridica($this->request);
             }
 
             return back()
