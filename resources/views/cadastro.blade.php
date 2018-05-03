@@ -28,52 +28,52 @@
         <div class="row center_div">
             <h4 class="subtitle">ENTRE COM AS INFORMAÇÕES NECESSÁRIAS :)</h4>
             <div class="container">
-                <form action="" class="" method="post">
+                <form action="{{route('doador.cadastro')}}" class="" method="post">
                     <div class="col-md-6">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <div class="controls">
                                 <input name="email" style="display:none">
-                                <input type="text" class="form-control" placeholder="Email" id="email" name="email" maxlength="40" autocomplete="off">
+                                <input type="email" class="form-control" placeholder="Email" id="email" name="email" value="{{old('email')}}" maxlength="40" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="celular" style="display:none">
-                                <input type="text" class="form-control" placeholder="Celular" id="celular" name="celular" maxlength="40" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="Celular" id="celular" name="celular" value="{{old('celular')}}" maxlength="40" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="telefone" style="display:none">
-                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" maxlength="40" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" value="{{old('telefone')}}" maxlength="40" autocomplete="off" required>
                             </div>
                         </div>
 
                         <hr>
 
                         <div class="form-group">
-                            <input id="tipoPessoaFisica" onchange="showInfoPessoaFisica()" name="tipoPessoa" type="radio" checked="" />
-                            <label for="on" >Pessoa Física</label>
+                            <input id="tipoPessoaFisica" onchange="showInfoPessoaFisica()" name="tipoPessoa" value="pessoaFisica" type="radio" checked="" />
+                            <label for="PessoaFisica" >Pessoa Física</label>
 
-                            <input id="tipoPessoaJuridica" onchange="showInfoPessoaJuridica()" name="tipoPessoa" type="radio" />
-                            <label for="off" >Pessoal Jurírida (empresa)</label>
+                            <input id="tipoPessoaJuridica" onchange="showInfoPessoaJuridica()" name="tipoPessoa" value="pessoaJuridica" type="radio" />
+                            <label for="PessoaJuridica" >Pessoal Jurídida (empresa)</label>
                         </div>
 
                         <div id="infoPessoaFisica">
                             <div class="form-group">
                                 <div class="controls">
                                     <input name="nome" style="display:none">
-                                    <input type="text" class="form-control" placeholder="Nome completo" id="nome" name="nome" maxlength="100" autocomplete="off">
+                                    <input type="text" class="form-control" placeholder="Nome completo" id="nome" name="nome" value="{{old('nome')}}" maxlength="100" autocomplete="off">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="controls">
                                     <input name="cpf" style="display:none">
-                                    <input type="text" class="form-control" placeholder="CPF do titular" id="cpf" name="cpf" maxlength="100" autocomplete="off">
+                                    <input type="text" class="form-control" placeholder="CPF do titular" id="cpf" name="cpf" value="{{old('cpf')}}" maxlength="100" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -82,20 +82,20 @@
                             <div class="form-group">
                                 <div class="controls">
                                     <input name="razao" style="display:none">
-                                    <input type="text" class="form-control" placeholder="Nome da empresa" id="razao" name="razao" maxlength="11" autocomplete="off">
+                                    <input type="text" class="form-control" placeholder="Nome da empresa" id="razao" name="razao" value="{{old('razao')}}" maxlength="11" autocomplete="off">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="controls">
                                     <input name="cnpj" style="display:none">
-                                    <input type="text" class="form-control" placeholder="CNPJ da empresa" id="cnpj" name="cnpj" maxlength="14" autocomplete="off">
+                                    <input type="text" class="form-control" placeholder="CNPJ da empresa" id="cnpj" name="cnpj" value="{{old('cnpj')}}" maxlength="14" autocomplete="off">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="controls">
-                                    <input type="file" accept="image/*" class="form-control" placeholder="Selecione uma logotipo" id="logotipo" name="logotipo">
+                                    <input type="file" accept="image/*" class="form-control" placeholder="Selecione uma logotipo" id="logotipo" name="logotipo" value="{{old('logotipo')}}">
                                 </div>
                             </div>
                         </div>
@@ -105,48 +105,48 @@
                         <div class="form-group">
                             <div class="controls">
                                 <input name="cep" style="display:none">
-                                <input type="text" class="form-control" placeholder="CEP" id="cep" name="cep" maxlength="8" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="CEP" id="cep" name="cep" value="{{old('cep')}}" maxlength="8" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="rua" style="display:none">
-                                <input type="text" class="form-control" placeholder="Nome da rua" id="rua" name="rua" maxlength="255" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="Nome da rua" id="rua" name="rua" value="{{old('rua')}}" maxlength="255" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="numero" style="display:none">
-                                <input type="number" class="form-control" placeholder="Número da resodência" id="numero" name="numero" autocomplete="off">
+                                <input type="number" class="form-control" placeholder="Número da resodência" id="numero" value="{{old('numero')}}" name="numero" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="bairro" style="display:none">
-                                <input type="text" class="form-control" placeholder="Nome do bairro" id="bairro" name="bairro" maxlength="255" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="Nome do bairro" id="bairro" name="bairro" value="{{old('bairro')}}" maxlength="255" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="controls">
                                 <input name="cidade" style="display:none">
-                                <input type="text" class="form-control" placeholder="Nome da cidade" id="cidade" name="cidade" maxlength="255" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="Nome da cidade" id="cidade" name="cidade" value="{{old('cidade')}}" maxlength="255" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="uf" style="display:none">
-                                <input type="text" class="form-control" placeholder="UF" id="uf" name="uf" maxlength="2" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="UF" id="uf" name="uf" value="{{old('uf')}}" maxlength="2" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
                                 <input name="pais" style="display:none">
-                                <input type="text" class="form-control" placeholder="País" id="pais" name="pais" maxlength="255" autocomplete="off">
+                                <input type="text" class="form-control" placeholder="País" id="pais" name="pais" value="{{old('pais')}}" maxlength="255" autocomplete="off" required>
                             </div>
                         </div>
 
@@ -154,13 +154,13 @@
 
                         <div class="form-group">
                             <div class="controls">
-                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Senha" name="password" maxlength="20">
+                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Senha" name="password" maxlength="20" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
-                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Senha" name="password_confirmation" maxlength="20">
+                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Repita a senha" name="password_confirmation" maxlength="20" required>
                             </div>
                         </div>
 
