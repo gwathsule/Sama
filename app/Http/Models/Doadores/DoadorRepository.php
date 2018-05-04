@@ -108,7 +108,7 @@ class DoadorRepository
         DB::connection('mysql')->beginTransaction();
         try {
             $novo_user = User::create([
-                'name' => $request->nome,
+                'name' => $request->razao,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'tipo' => 1,

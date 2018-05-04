@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Doador;
 
 use App\Http\Controllers\Controller;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,6 @@ class HomeController extends Controller
     }
 
     public function home(){
-        dd('home do doador');
+        return view('welcome');
     }
 }

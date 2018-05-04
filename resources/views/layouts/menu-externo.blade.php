@@ -20,6 +20,14 @@
                     <li><a href="{{url('/')}}#clients"><i class="fa fa-puzzle-piece"></i> Parceiros</a></li>
                     <li><a href="{{url('/')}}#about"><i class="fa fa-info"></i> O projeto</a></li>
                     <li><a href="{{url('/')}}#contact"><i class="fa fa-envelope"></i> Contato</a></li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn"> <i class="fas fa-user"> </i> Doador</button>
+                            <div class="dropdown-content">
+                                @include('layouts.menu-user')
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
