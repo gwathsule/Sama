@@ -2,7 +2,13 @@
 	<div class="container">
 		<div class="row">
 			<h1 class="title">Doações</h1>
-			
+
+			<?php
+				$entidadeDB = new \App\Http\Models\Entidades\EntidadeRepository();
+				$pedidosDB = new \App\Http\Models\Pedidos\PedidosRepository();
+				$doacoes = $pedidosDB->getPrimeiras10DoacoesByData();
+			?>
+
 			<div class="container">
 				<div class="row">
 					<div class="centro">
@@ -20,48 +26,89 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr id="1" class="danger" onclick="minhaFuncao(this)">
-									<td data-title="Data">15/02/2018</td>
-									<td data-title="Entidade">Centro de Acolhida</td>
-									<td data-title="Data Crítica">19/03/2018</td>
-									<td data-title="Necessidade">1 professor de violão.</td>
-									<td data-title="Doação"><button type="button" id="doabt01" class="btn btn-md btn-success" data-toggle="modal" data-target="#modalDoar">Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
+							@foreach ($doacoes as $doacao)
+								<?php
+								$produto = $doacao->produto()->first();
+								$nomeNecessidade = $produto->qtd. ' ' . $produto->unidade . ' de ' . $produto->nome;
+								date_default_timezone_set('America/Sao_Paulo');
+								$hoje = new DateTime();
+								$precisao = new DateTime($doacao->dataPrecisao);
+								$diferenca = $precisao->diff($hoje);
+								$entidade= $entidadeDB->getById($doacao->entidade_id);
+								$classe = '';
+								if(strcmp($doacao->status, 'Concluído') == 0){
+									$classe = 'success';
+								} else {
+									if($diferenca->d < 7)
+										$classe = 'danger';
+									if($diferenca->d >= 7 && $diferenca->d < 14)
+										$classe = 'warning';
+								}
+								?>
+								<tr id="{{$doacao->id}}" class="{{$classe}}" onclick="minhaFuncao(this)">
+									<td data-title="Data">{{\Carbon\Carbon::parse($doacao->created_at)->format('d/m/y')}}</td>
+									<td data-title="Entidade">{{$entidade->name}}</td>
+									<td data-title="Data Crítica">{{\Carbon\Carbon::parse($doacao->dataPrecisao)->format('d/m/y')}}</td>
+									<td data-title="Necessidade">{{$nomeNecessidade}}</td>
+									@if (Auth::guest())
+										<td data-title="Doação"><button type="button" id="doabt01" class="btn btn-md btn-success" style="font-size: 10px" data-toggle="modal" data-target="#modalLogin">Logar para <br> Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
+									@else
+										<td data-title="Doação"><button type="button" id="doabt01" class="btn btn-md btn-success" data-toggle="modal" data-target="#modalDoar_{{$doacao->id}}">Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
+									@endif
+
 								</tr>
-								<tr id="2" class="danger" onclick="minhaFuncao(this)">
-									<td data-title="Data">24/02/2018</td>
-									<td data-title="Entidade">Centro de Acolhida</td>
-									<td data-title="Data Crítica">15/03/2018</td>
-									<td data-title="Necessidade">Sabonete, Sabão, Pasta de dentes.</td>
-									<td><button type="button" id="doabt02" class="btn btn-md btn-success" data-toggle="modal" data-target="#modalDoar">Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
-								</tr>
-								<tr id="3" class="danger" onclick="minhaFuncao(this)">
-									<td data-title="Data">10/04/2018</td>
-									<td data-title="Entidade">Asilo Vovô Simeão</td>
-									<td data-title="Data Crítica">30/05/2018</td>
-									<td data-title="Necessidade">20 Litros de Leite</td>
-									<td><button type="button" id="doabt03" class="btn btn-md btn-success" data-toggle="modal" data-target="#modalDoar">Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
-								</tr>
-								<tr id="1" class="success" onclick="minhaFuncao(this)">
-									<td data-title="Data">10/02/2018</td>
-									<td data-title="Entidade">Lar Pai Abraão</td>
-									<td data-title="Data Crítica">30/02/2018</td>
-									<td data-title="Necessidade">1 Cadeira de Rodas</td>
-									<td><i class="fa fa-check"></i> Concluído</td>
-								</tr>
-								<tr id="2" class="warning" onclick="minhaFuncao(this)">
-									<td data-title="Data">24/02/2018</td>
-									<td data-title="Entidade">Centro de Acolhida</td>
-									<td data-title="Data Crítica">15/03/2018</td>
-									<td data-title="Necessidade">Sabonete, Sabão, Pasta de dentes.</td>
-									<td><button type="button" id="doabt05" class="btn btn-md btn-success" data-toggle="modal" data-target="#modalDoar">Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
-								</tr>
-								<tr id="3" class="danger" onclick="minhaFuncao(this)">
-									<td data-title="Data">10/04/2018</td>
-									<td data-title="Entidade">Asilo Vovô Simeão</td>
-									<td data-title="Data Crítica">30/05/2018</td>
-									<td data-title="Necessidade">20 Litros de Leite</td>
-									<td><button type="button" id="doabt06" class="btn btn-md btn-success" data-toggle="modal" data-target="#modalDoar">Ajudar <i class="fa fa-heart faa-pulse animated"></i></button></td>
-								</tr>
+								{{--dd(Auth::guest())--}}
+								@if (Auth::guest() == false)
+								<!-- Modal Doar -->
+								<div class="modal fade" id="modalDoar_{{$doacao->id}}" role="dialog">
+									<div class="modal-dialog modal-md centro">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h3 class="modal-title">Doação para <b>{{$entidade->name}}</b></h3>
+											</div>
+											<div class="modal-body">
+												<div class="container">
+													<form role="form" action="{{route('doador.doacao.novo')}}" class="" method="post">
+														<div class="col-md-6">
+															<h3>Necessidade: <b>{{$nomeNecessidade}}</b></h3>
+															<p>Data: {{\Carbon\Carbon::parse($doacao->created_at)->format('d/m/y')}} - Data Crítica: {{\Carbon\Carbon::parse($doacao->dataPrecisao)->format('d/m/y')}}</p>
+															{{ csrf_field() }}
+															<!-- Text input-->
+															<div class="form-group">
+																<label class="col-md-2 control-label" for="txt_quant">Quant.</label>
+																<div class="col-md-10">
+																	<input id="txt_quant" type="number" class="form-control input-lg fonte30" name="txt_quant" min="0" required>
+																	<span class="help-block">Quant. de <b>{{$produto->unidade}} de {{$produto->nome}}</b> que está doando.</span>
+																</div>
+															</div>
+															<!-- Text input-->
+															<div class="form-group">
+																<label class="col-md-2 control-label" for="txt_data">Data</label>
+																<div class="col-md-10">
+																	<input id="txt_data" name="dataDisponivel" type="date" class="form-control input-lg fonte24" required>
+																	<span class="help-block">Melhor dia para recolher a doação.</span>
+																</div>
+															</div>
+
+															<div>
+																<button type="submit" id="bt_confirmaDoacao" class="btn btn-lg btn-success">Confirmar Doação</button><div id="success" style="color:#34495e;"></div>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /Modal Doar -->
+								@endif
+							@endforeach
 							</tbody>
 						</table>
 						<center><a href="{{url('doar')}}"><button type="button" class="btn btn-lg btn-warning"><i class="fa fa-list faa-tada animated"></i> Listar Todas...</button></a></center>

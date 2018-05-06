@@ -21,6 +21,9 @@
 @include('layouts.modalDoar')
 <!-- /Modal Doar -->
 
+<!-- Modal Sucesso -->
+@include('layouts.success')
+<!-- /Modal Sucesso -->
 
 <!-- Doações Section -->
 <section id="cadastro">
@@ -220,6 +223,7 @@
 <script>
 
     $( document ).ready(function() {
+        document.getElementById("btn_modal_sucess").click();
         if($('#rbTipoPessoaFisica').prop("checked")){
             showInfoPessoaFisica();
         } else {
@@ -235,6 +239,8 @@
         document.getElementById('infoPessoaJuridica').style.display = 'block';
         document.getElementById('infoPessoaFisica').style.display = 'none';
     }
+
+
 </script>
 
 </body>

@@ -38,6 +38,10 @@ class PublicController extends Controller
                         ->withInput();
                 }
                 $this->doadorDB->novaPessoaFisica($this->request);
+
+                return back()
+                    ->with('success', 'Novo doador cadastrado com sucesso! Seja bem vindo a nossa família! ');
+
             } else{
                 $validator = $this->doadorDB->validarNovaPessoaJuridica($this->request);
 
@@ -47,10 +51,10 @@ class PublicController extends Controller
                         ->withInput();
                 }
                 $this->doadorDB->novaPessoaJuridica($this->request);
-            }
 
-            return back()
-                ->with('success', 'Entidade cadastrada com sucesso');
+                return back()
+                    ->with('success', 'Nova empresa cadastrada com sucesso! Seja bem vindo a nossa família! ');
+            }
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage())

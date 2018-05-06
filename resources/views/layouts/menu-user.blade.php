@@ -1,6 +1,6 @@
 @if (Auth::guest())
     <a href="#" data-toggle="modal" data-target="#modalLogin" ><i class="fas fa-sign-in-alt"></i> Login</a>
-    <a href="#">Cadastre-se</a>
+    <a href="{{url('cadastro')}}">Cadastre-se</a>
 @else
     @if(strcmp(Auth::user()->tipo, 'Doador') == 0)
         <a href="#">Meus dados</a>

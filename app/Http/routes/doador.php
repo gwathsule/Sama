@@ -11,5 +11,7 @@ Route::post('/doador/cadastro',     ['as' => 'doador.cadastro',      'uses' => '
 Route::group(['middleware' => ['checaPermissao:doador'] ,'prefix' => 'painel/doador'], function () {
     Route::get('/', 'PanelController@homeDoador');
     Route::get('/home',     ['as' => 'doador.home',      'uses' => 'Doador\HomeController@home']);
-    //Route::get('/perfil',   ['as' => 'admin.perfil',    'uses' => 'PanelController@perfilAdmin']);
+    
+    //rotas doacao
+    Route::post('/doacao/novo',     ['as' => 'doador.doacao.novo',      'uses' => 'Doador\DoacaoController@novo']);
 });
