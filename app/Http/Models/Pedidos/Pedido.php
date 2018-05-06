@@ -17,6 +17,7 @@ class Pedido extends Model
         if ($value == 1) return 'Aguardando aprovação';
         if ($value == 2) return 'Não aprovado';
         if ($value == 3) return 'Aprovado';
+        if ($value == 3) return 'Concluído';
         return 'Indefinido';
     }
 

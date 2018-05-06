@@ -6,9 +6,12 @@
  * Time: 21:28
  */
 
-Route::group(['middleware' => ['checaPermissao:doador'] ,'prefix' => 'painel/doador'], function () {
+Route::post('/doador/cadastro',     ['as' => 'doador.cadastro',      'uses' => 'Doador\PublicController@cadastro']);
 
+Route::group(['middleware' => ['checaPermissao:doador'] ,'prefix' => 'painel/doador'], function () {
     Route::get('/', 'PanelController@homeDoador');
     Route::get('/home',     ['as' => 'doador.home',      'uses' => 'Doador\HomeController@home']);
-    //Route::get('/perfil',   ['as' => 'admin.perfil',    'uses' => 'PanelController@perfilAdmin']);
+    
+    //rotas doacao
+    Route::post('/doacao/novo',     ['as' => 'doador.doacao.novo',      'uses' => 'Doador\DoacaoController@novo']);
 });

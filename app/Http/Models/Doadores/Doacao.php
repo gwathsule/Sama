@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Doacao extends Model
 {
     protected $fillable = [
-        'dataEntrega', 'dataDisponivel', 'status'
+        'dataEntrega', 'dataDisponivel', 'status', 'qtd_item'
     ];
 
     public function produtos(){
