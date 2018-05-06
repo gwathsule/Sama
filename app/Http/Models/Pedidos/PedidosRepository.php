@@ -19,4 +19,12 @@ class PedidosRepository
             ->sortBy('dataPrecisao');
         return $lista;
     }
+
+    public function getAllByDataPaginate(){
+        $lista = Pedido::query()
+            ->where('status', '=', 3)
+            ->orderBy('dataPrecisao')
+            ->paginate(15);
+        return $lista;
+    }
 }

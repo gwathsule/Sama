@@ -14,6 +14,10 @@
     @include('layouts.modalLogin')
 	<!-- /Modal Login -->
 
+    <!-- Modal Sucesso -->
+    @include('layouts.success')
+    <!-- /Modal Sucesso -->
+
 	<!-- Oque é.. Section -->
     @include('layouts.oqueE')
 	<!-- /Oque é.. Section End -->
@@ -96,6 +100,7 @@
         @if ($errors->getBag('default')->has('email'))
             <script type="text/javascript">
                 $(document).ready(function() {
+                    document.getElementById("btn_modal_sucess").click();
                     $('#modalLogin').modal('show');
                 })
             </script>

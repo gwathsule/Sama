@@ -62,6 +62,37 @@ class DoadorRepository
             ]);
     }
 
+    public function validarNovaDoacao(Request $request){
+        return
+            Validator::make($request->all(), [
+                'doadorId' => 'required',
+                'pedidoId' => 'required',
+                'qtd_item' => 'required|numeric',
+                'dataDisponivel' => 'required|date',
+            ]);
+    }
+
+    public function novaDoacao(Request $request){
+        DB::connection('mysql')->beginTransaction();
+
+        try {
+            $doador = Doador::query()->find($request->doadorId);
+
+            $doacao = $doador->doacoes()->create([
+                'dataEntrega' => null,
+                'dataDisponivel' => $request->dataDisponivel,
+                'status' => 1,
+                'qtd_item' => $request->qtd_item,
+                'pedido_id' => $request->pedidoId
+            ]);
+
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao cadastrar nova doação: ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
     public function novaPessoaFisica(Request $request){
         DB::connection('mysql')->beginTransaction();
         try {
@@ -160,6 +191,10 @@ class DoadorRepository
             throw new Exception('Erro ao cadastrar novo doador tipo empresa: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
+    }
+
+    public function getByUserId($userId){
+        return Doador::query()->where('user_id', '=', $userId)->first();
     }
 
     private function setRole(User $user)

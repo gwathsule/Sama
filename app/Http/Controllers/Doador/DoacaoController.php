@@ -31,7 +31,21 @@ class DoacaoController extends Controller
     }
 
     public function novo(){
-        dd($this->request);
+        try {
+            $validator = $this->doadorDB->validarNovaDoacao($this->request);
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            $this->doadorDB->novaDoacao($this->request);
+
+            return back()->with('success', 'Doação registrada, entraremos em contato com você para valida-la. Obrigado por ajudar :)');
+        }catch (Exception $e){
+            return back()
+                ->withErrors($e->getMessage())
+                ->withInput();
+        }
     }
 
 }
