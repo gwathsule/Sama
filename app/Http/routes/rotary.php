@@ -33,4 +33,7 @@ Route::group(['middleware' => ['checaPermissao:rotary'] ,'prefix' => 'painel/rot
     Route::get('/pedido/excluir/{idPedido}',            ['as' => 'rotary.pedido.excluir',              'uses' => 'Rotary\EntidadeController@excluirPedido']);
 
     //funções rotary.doacoes
+    Route::get('/doacao/aprovar/{idDoacao}',            ['as' => 'rotary.doacao.aprovar',              'uses' => 'Rotary\DoadorController@aprovarDoacao']);
+    Route::get('/doacao/excluir/{idDoacao}',            ['as' => 'rotary.doacao.excluir',              'uses' => 'Rotary\DoadorController@excluirDoacao']);
+
 });

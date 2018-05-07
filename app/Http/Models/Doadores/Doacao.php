@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Doacao extends Model
 {
     protected $fillable = [
-        'dataEntrega', 'dataDisponivel', 'status', 'qtd_item'
+        'dataEntrega', 'dataDisponivel', 'status', 'qtd_item', 'pedido_id', 'entidade_id', 'doador_id'
     ];
 
     public function produtos(){

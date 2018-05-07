@@ -8,6 +8,7 @@
 
 namespace App\Http\Models\Doadores;
 
+use App\Http\Models\Pedidos\PedidosRepository;
 use App\Http\Models\Users\Role;
 use App\Http\Models\Users\User;
 use DB;
@@ -81,11 +82,16 @@ class DoadorRepository
         }
     }
 
+    public function getById($idDoador){
+        return Doador::query()->find($idDoador);
+    }
+
     public function novaDoacao(Request $request){
         DB::connection('mysql')->beginTransaction();
 
         try {
             $doador = Doador::query()->find($request->doadorId);
+
             $doacao = $doador->doacoes()->create([
                 'dataEntrega' => null,
                 'dataDisponivel' => $request->dataDisponivel,
@@ -93,7 +99,6 @@ class DoadorRepository
                 'qtd_item' => $request->qtd_item,
                 'pedido_id' => $request->pedidoId
             ]);
-            dd($doacao);
 
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
@@ -101,6 +106,45 @@ class DoadorRepository
         }
         DB::connection('mysql')->commit();
     }
+
+    public function aprovarDoacao($idDoacao){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $pedidoDB = new PedidosRepository();
+            $doacao = Doacao::query()->find($idDoacao);
+            $pedido = $pedidoDB->getById($doacao->pedido_id);
+            $produto = $pedido->produto()->first();
+
+            $doacao->status = 2;
+            $produto->qtd = $produto->qtd - $doacao->qtd_item;
+
+            $doacao->update();
+            $produto->update();
+
+            if($produto->qtd <= 0){
+                $pedido->status = 4;
+                $pedido->update();
+            }
+
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao aprovar : ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
+    public function excluirPedido($idDoacao){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $doacao = Doacao::query()->find($idDoacao);
+            $doacao->delete();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao deletar : ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
 
     public function novaPessoaFisica(Request $request){
         DB::connection('mysql')->beginTransaction();

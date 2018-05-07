@@ -11,6 +11,11 @@ namespace App\Http\Models\Pedidos;
 
 class PedidosRepository
 {
+
+    public function getById($idPedido){
+        return Pedido::query()->find($idPedido);
+    }
+
     public function getPrimeiras10DoacoesByData(){
         $lista = Pedido::query()
             ->where('status', '=', 3)
