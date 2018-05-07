@@ -72,12 +72,20 @@ class DoadorRepository
             ]);
     }
 
+    public function getAllNovasDoacoes(){
+        try {
+            return Doacao::query()->where('status','=', 1)->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar necessidades : ' . $e->getMessage());
+        }
+    }
+
     public function novaDoacao(Request $request){
         DB::connection('mysql')->beginTransaction();
 
         try {
             $doador = Doador::query()->find($request->doadorId);
-
             $doacao = $doador->doacoes()->create([
                 'dataEntrega' => null,
                 'dataDisponivel' => $request->dataDisponivel,
@@ -85,6 +93,7 @@ class DoadorRepository
                 'qtd_item' => $request->qtd_item,
                 'pedido_id' => $request->pedidoId
             ]);
+            dd($doacao);
 
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
