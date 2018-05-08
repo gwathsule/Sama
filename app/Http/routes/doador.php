@@ -10,8 +10,10 @@ Route::post('/doador/cadastro',     ['as' => 'doador.cadastro',      'uses' => '
 
 Route::group(['middleware' => ['checaPermissao:doador'] ,'prefix' => 'painel/doador'], function () {
     Route::get('/', 'PanelController@homeDoador');
-    Route::get('/home',     ['as' => 'doador.home',      'uses' => 'Doador\HomeController@home']);
-    
+    Route::get('/home',             ['as' => 'doador.home',         'uses' => 'Doador\HomeController@home']);
+    Route::get('/home/doacoes',     ['as' => 'doador.home.doacoes', 'uses' => 'Doador\HomeController@doacoes']);
+    Route::get('/home/perfil',      ['as' => 'doador.home.perfil',  'uses' => 'Doador\HomeController@perfil']);
+
     //rotas doacao
     Route::post('/doacao/novo',     ['as' => 'doador.doacao.novo',      'uses' => 'Doador\DoacaoController@novo']);
 });

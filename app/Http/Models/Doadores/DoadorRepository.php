@@ -110,7 +110,17 @@ class DoadorRepository
     }
 
 
-    public function getAllNovasDoacoes(){
+    public function getAllNovasDoacoes($idDoador){
+        try {
+            $doador = Doador::query()->find($idDoador);
+            return $doador->doacoes()->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar doações: ' . $e->getMessage());
+        }
+    }
+
+    public function getAllDoacoesByDoador($idDoador){
         try {
             return Doacao::query()->where('status','=', 1)->get();
         } catch (Exception $e){
@@ -118,7 +128,7 @@ class DoadorRepository
             throw new Exception('Erro ao recuperar doações: ' . $e->getMessage());
         }
     }
-
+    
     public function getById($idDoador){
         return Doador::query()->find($idDoador);
     }
