@@ -73,12 +73,49 @@ class DoadorRepository
             ]);
     }
 
+    public function getAllDoacoesAndamento(){
+        try {
+            return Doacao::query()->where('status','>', 1)->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar doações : ' . $e->getMessage());
+        }
+    }
+
+    public function getAllDoacoesAprovadas(){
+        try {
+            return Doacao::query()->where('status','=', 2)->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar doações : ' . $e->getMessage());
+        }
+    }
+
+    public function getAllDoacoesEmEstoque(){
+        try {
+            return Doacao::query()->where('status','=', 3)->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar doações : ' . $e->getMessage());
+        }
+    }
+
+    public function getAllDoacoesEntregue(){
+        try {
+            return Doacao::query()->where('status','=', 4)->get();
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao recuperar doações : ' . $e->getMessage());
+        }
+    }
+
+
     public function getAllNovasDoacoes(){
         try {
             return Doacao::query()->where('status','=', 1)->get();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            throw new Exception('Erro ao recuperar necessidades : ' . $e->getMessage());
+            throw new Exception('Erro ao recuperar doações: ' . $e->getMessage());
         }
     }
 
@@ -114,16 +151,21 @@ class DoadorRepository
             $doacao = Doacao::query()->find($idDoacao);
             $pedido = $pedidoDB->getById($doacao->pedido_id);
             $produto = $pedido->produto()->first();
+            $statusAnterior = $doacao->status;
 
-            $doacao->status = 2;
-            $produto->qtd = $produto->qtd - $doacao->qtd_item;
+            if($statusAnterior == 1){
+                $doacao->status = 2;
+                $produto->qtd = $produto->qtd - $doacao->qtd_item;
+            }
 
             $doacao->update();
             $produto->update();
 
-            if($produto->qtd <= 0){
-                $pedido->status = 4;
-                $pedido->update();
+            if($statusAnterior == 1){
+                if($produto->qtd <= 0){
+                    $pedido->status = 4;
+                    $pedido->update();
+                }
             }
 
         } catch (Exception $e){
@@ -133,7 +175,7 @@ class DoadorRepository
         DB::connection('mysql')->commit();
     }
 
-    public function excluirPedido($idDoacao){
+    public function excluirDoacao($idDoacao){
         DB::connection('mysql')->beginTransaction();
         try {
             $doacao = Doacao::query()->find($idDoacao);
@@ -144,6 +186,19 @@ class DoadorRepository
         }
         DB::connection('mysql')->commit();
     }
+
+    public  function marcarComoEstoque($idDoacao){
+        $doacao = Doacao::query()->find($idDoacao);
+        $doacao->status = 3;
+        $doacao->update();
+    }
+
+    public  function marcarComoEntregue($idDoacao){
+        $doacao = Doacao::query()->find($idDoacao);
+        $doacao->status = 4;
+        $doacao->update();
+    }
+
 
 
     public function novaPessoaFisica(Request $request){

@@ -35,7 +35,7 @@ class ChecaPermissao
             }
         }
         else
-            return redirect('/login');
+            return redirect('/');
 
         return $next($request);
     }

@@ -6,6 +6,7 @@
 			<?php
 				$entidadeDB = new \App\Http\Models\Entidades\EntidadeRepository();
 				$pedidosDB = new \App\Http\Models\Pedidos\PedidosRepository();
+				$doadorDB = new \App\Http\Models\Doadores\DoadorRepository();
 				$doacoes = $pedidosDB->getPrimeiras10DoacoesByData();
 			?>
 
@@ -39,10 +40,14 @@
 								if(strcmp($doacao->status, 'Concluído') == 0){
 									$classe = 'success';
 								} else {
-									if($diferenca->d < 7)
+									if($diferenca->invert == 0){
 										$classe = 'danger';
-									if($diferenca->d >= 7 && $diferenca->d < 14)
-										$classe = 'warning';
+									} else {
+										if($diferenca->days < 7)
+											$classe = 'danger';
+										if($diferenca->days >= 7 && $diferenca->days < 14)
+											$classe = 'warning';
+									}
 								}
 								?>
 								<tr id="{{$doacao->id}}" class="{{$classe}}" onclick="minhaFuncao(this)">
@@ -59,54 +64,56 @@
 								</tr>
 								{{--dd(Auth::guest())--}}
 								@if (Auth::guest() == false)
-								<!-- Modal Doar -->
-								<div class="modal fade" id="modalDoar_{{$doacao->id}}" role="dialog">
-									<div class="modal-dialog modal-md centro">
+									<!-- Modal Doar -->
+									<div class="modal fade" id="modalDoar_{{$doacao->id}}" role="dialog">
+										<div class="modal-dialog modal-md centro">
 
-										<!-- Modal content-->
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h3 class="modal-title">Doação para <b>{{$entidade->name}}</b></h3>
-											</div>
-											<div class="modal-body">
-												<div class="container">
-													<form role="form" action="{{route('doador.doacao.novo')}}" class="" method="post">
-														<div class="col-md-6">
-															<h3>Necessidade: <b>{{$nomeNecessidade}}</b></h3>
-															<p>Data: {{\Carbon\Carbon::parse($doacao->created_at)->format('d/m/y')}} - Data Crítica: {{\Carbon\Carbon::parse($doacao->dataPrecisao)->format('d/m/y')}}</p>
-															{{ csrf_field() }}
-															<!-- Text input-->
-															<div class="form-group">
-																<label class="col-md-2 control-label" for="txt_quant">Quant.</label>
-																<div class="col-md-10">
-																	<input id="txt_quant" type="number" class="form-control input-lg fonte30" name="txt_quant" min="0" required>
-																	<span class="help-block">Quant. de <b>{{$produto->unidade}} de {{$produto->nome}}</b> que está doando.</span>
-																</div>
-															</div>
-															<!-- Text input-->
-															<div class="form-group">
-																<label class="col-md-2 control-label" for="txt_data">Data</label>
-																<div class="col-md-10">
-																	<input id="txt_data" name="dataDisponivel" type="date" class="form-control input-lg fonte24" required>
-																	<span class="help-block">Melhor dia para recolher a doação.</span>
-																</div>
-															</div>
-
-															<div>
-																<button type="submit" id="bt_confirmaDoacao" class="btn btn-lg btn-success">Confirmar Doação</button><div id="success" style="color:#34495e;"></div>
-															</div>
-														</div>
-													</form>
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h3 class="modal-title">Doação para <b>{{$entidade->name}}</b></h3>
 												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+												<div class="modal-body">
+													<div class="container">
+														<form role="form" action="{{route('doador.doacao.novo')}}" class="" method="post">
+															<div class="col-md-6">
+																{{ csrf_field() }}
+																<input type="hidden" name="doadorId" value="{{$doadorDB->getByUserId(Auth::user()->id)->id}}">
+																<input type="hidden" name="pedidoId" value="{{$doacao->id}}">
+																<h3>Necessidade: <b>{{$nomeNecessidade}}</b></h3>
+																<p>Data: {{\Carbon\Carbon::parse($doacao->created_at)->format('d/m/y')}} - Data Crítica: {{\Carbon\Carbon::parse($doacao->dataPrecisao)->format('d/m/y')}}</p>
+																<!-- Text input-->
+																<div class="form-group">
+																	<label class="col-md-2 control-label" for="qtd_item">Quant.</label>
+																	<div class="col-md-10">
+																		<input id="qtd_item" type="number" class="form-control input-lg fonte30" name="qtd_item" min="0" required>
+																		<span class="help-block">Quant. de <b>{{$produto->unidade}} de {{$produto->nome}}</b> que está doando.</span>
+																	</div>
+																</div>
+																<!-- Text input-->
+																<div class="form-group">
+																	<label class="col-md-2 control-label" for="txt_data">Data</label>
+																	<div class="col-md-10">
+																		<input id="dataDisponivel" name="dataDisponivel" type="datetime-local" class="form-control input-lg fonte24" required>
+																		<span class="help-block">Melhor dia e hora para recolher a doação.</span>
+																	</div>
+																</div>
+
+																<div>
+																	<button type="submit" id="bt_confirmaDoacao" class="btn btn-lg btn-success">Confirmar Doação</button><div id="success" style="color:#34495e;"></div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- /Modal Doar -->
+									<!-- /Modal Doar -->
 								@endif
 							@endforeach
 							</tbody>

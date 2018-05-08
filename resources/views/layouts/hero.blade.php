@@ -25,7 +25,7 @@
 					</div>
 					<div class="centro">
 						<a href="#doacao" class="btn btn-common btn-lg">Doe Agora!</a>
-						<a href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalLogin">Entrar</a> 
+						<a href="#" id="btn_modal_login" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalLogin">Entrar</a>
 					</div>
 				</div>
 				<div class="direita fonte18 italico">

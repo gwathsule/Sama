@@ -57,10 +57,14 @@
 						if(strcmp($doacao->status, 'Concluído') == 0){
 							$classe = 'success';
 						} else {
-							if($diferenca->d < 7)
+							if($diferenca->invert == 0){
 								$classe = 'danger';
-							if($diferenca->d >= 7 && $diferenca->d < 14)
-								$classe = 'warning';
+							} else {
+								if($diferenca->days < 7)
+									$classe = 'danger';
+								if($diferenca->days >= 7 && $diferenca->days < 14)
+									$classe = 'warning';
+							}
 						}
 						?>
 						<tr id="{{$doacao->id}}" class="{{$classe}}" onclick="minhaFuncao(this)">

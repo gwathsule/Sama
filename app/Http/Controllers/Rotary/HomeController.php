@@ -96,4 +96,15 @@ class HomeController extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+    
+    public function doacaoes_andamento(){
+        try{
+            $doacoes = $this->doadorDB->getAllDoacoesAndamento();
+            return view('panel::rotary.doacoes_andamento', compact('doacoes'));
+        } catch (Exception $e){
+            dd($e->getMessage());
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }

@@ -11,7 +11,7 @@
                 <div>
                     <div class="card">
                         <div class="card-header">
-                            <h4>NOVAS DOAÇÕES</h4>
+                            <h4>DOAÇÕES EM ANDAMENTO</h4>
                         </div>
                         @php
                             $doadorDB = new \App\Http\Models\Doadores\DoadorRepository();
@@ -19,6 +19,23 @@
                             $userDB = new \App\Http\Models\Users\UserRepository();
                         @endphp
                         <div class="card-body">
+                            <form action="{{route('rotary.doacao.getByDoacaoFiltro')}}" method="post">
+                                {{csrf_field()}}
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label">STATUS</label>
+                                    <div class="col-sm-6 mb-3">
+                                        <select name="status_doacao" class="form-control">
+                                            <option value="todos">TODOS</option>
+                                            <option value="aprovados">APROVADO (PRONTO PARA BUSCAR)</option>
+                                            <option value="em_estoque">EM ESTOQUE</option>
+                                            <option value="entregue">ENTREGUE</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 offset-sm-2">
+                                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                                    </div>
+                                </div>                                
+                            </form>
                             <div class="table-responsive">
                                 <table class="table table-striped table-sm">
                                     <thead>
@@ -27,7 +44,8 @@
                                         <th>Produto</th>
                                         <th>Quatidade</th>
                                         <th>Data/Hora Busca</th>
-                                        <th></th>
+                                        <th>Status</th>
+                                        <th>Marcar como</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -44,69 +62,31 @@
                                             <td>{{$produto->nome}}</td>
                                             <td>{{$doacao->qtd_item . ' ' . $produto->unidade. '(s)'}}</td>
                                             <td>{{$doacao->dataDisponivel}}</td>
+                                            <td>{{$doacao->status}}</td>
                                             <td>
-                                                <button type="button" class="btn-group btn-primary" data-toggle="modal" data-target="#modal_aprovar_{{$doacao->id}}" title="Aprovar">
-                                                    <i class="fa fa-check"></i>
-                                                </button>
-                                                <button type="button" class="btn-group btn-danger" data-toggle="modal" data-target="#modal_delete_{{$doacao->id}}" title="Excluir">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
+                                                <a  href="{{route('rotary.doacao.aprovar', ['idDoacao' => $doacao->id])}}">
+                                                    <button class="btn-group btn-default" title="Aprovado (pronto para buscar)">
+                                                        <i class="fa fa-check-circle"></i>
+                                                    </button>
+                                                </a>
+
+                                                <a href="{{route('rotary.doacao.marcarComoEstoque', ['idDoacao' => $doacao->id])}}" >
+                                                    <button class="btn-group btn-warning" title="Em estoque">
+                                                        <i class="fa fa-archive"></i>
+                                                    </button>
+                                                </a>
+
+                                                <a href="{{route('rotary.doacao.marcarComoEntregue', ['idDoacao' => $doacao->id])}}" >
+                                                    <button class="btn-group btn-primary" title="Entregue">
+                                                        <i class="fa fa-car"></i>
+                                                    </button>
+                                                </a>
 
                                                 <button type="button" class="btn-group btn-common" data-toggle="modal" data-target="#modal_detalhes_{{$doacao->id}}" title="Detalhes">
                                                     <i class="fa fa-info-circle"></i>
                                                 </button>
                                             </td>
                                         </tr>
-
-                                        <div class="modal fade " id="modal_aprovar_{{$doacao->id}}" tabindex="-1" role="dialog" aria-labelledby="modal_aprovar">
-                                            <div class="modal-dialog modal-dialog-centered " role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <ul>
-                                                            <li><strong>ID: </strong>{{$doacao->id}}</li>
-                                                            <li><strong>Produto: </strong>{{$pedido->produto()->first()->nome}}</li>
-                                                            <li><strong>Quantidade: </strong>{{$doacao->qtd_item . ' ' . $produto->unidade. '(s)'}}</li>
-                                                            <li><strong>Doador: </strong>{{$doador->name}}</li>
-                                                        </ul>
-                                                        <h4 class="align-items-center">APROVAR A DOCAO COM AS INFORMAÇÕES ACIMA?</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a href="{{route('rotary.doacao.aprovar', ['idDoacao' => $doacao->id])}}"><button class="btn btn-primary">APROVAR</button></a>
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal fade " id="modal_delete_{{$doacao->id}}" tabindex="-1" role="dialog" aria-labelledby="modal_deletar">
-                                            <div class="modal-dialog modal-dialog-centered " role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <ul>
-                                                            <li><strong>ID: </strong>{{$doacao->id}}</li>
-                                                            <li><strong>Produto: </strong>{{$pedido->produto()->first()->nome}}</li>
-                                                            <li><strong>Quantidade: </strong>{{$doacao->qtd_item . ' ' . $produto->unidade. '(s)'}}</li>
-                                                            <li><strong>Doador: </strong>{{$doador->name}}</li>
-                                                        </ul>
-                                                        <h4 class="align-items-center">APAGAR A DOAÇÃO COM AS INFORMAÇÕES ACIMA?</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a href="{{route('rotary.doacao.excluir', ['idDoacao' => $doacao->id])}}"><button class="btn btn-danger">APAGAR</button></a>
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="modal fade " id="modal_detalhes_{{$doacao->id}}" tabindex="-1" role="dialog" aria-labelledby="modal_detalhes">
                                             <div class="modal-dialog modal-dialog-centered " role="document">

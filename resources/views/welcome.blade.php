@@ -14,10 +14,6 @@
     @include('layouts.modalLogin')
 	<!-- /Modal Login -->
 
-    <!-- Modal Sucesso -->
-    @include('layouts.success')
-    <!-- /Modal Sucesso -->
-
 	<!-- Oque é.. Section -->
     @include('layouts.oqueE')
 	<!-- /Oque é.. Section End -->
@@ -25,7 +21,11 @@
 	<!-- Modal Doar -->
     @include('layouts.modalDoar')
 	<!-- /Modal Doar -->
-	
+
+    <!-- Modal Sucesso -->
+    @include('layouts.success')
+    <!-- /Modal Sucesso -->
+
 	<!-- Doações Section -->
     @include('layouts.doacoes')
 	<!-- /Doações Section End -->
@@ -96,11 +96,15 @@
 
         <!-- All JS plugin Triggers -->
         <script src="{{asset('/assets/site/js/main.js')}}"></script>
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#modal_success').modal('show');
+            })
+        </script>
         @if ($errors->getBag('default')->has('email'))
             <script type="text/javascript">
                 $(document).ready(function() {
-                    document.getElementById("btn_modal_sucess").click();
+                    document.getElementById("btn_modal_login").click();
                     $('#modalLogin').modal('show');
                 })
             </script>

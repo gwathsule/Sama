@@ -18,6 +18,7 @@ Route::group(['middleware' => ['checaPermissao:rotary'] ,'prefix' => 'painel/rot
     Route::get('/home/entidade/demandaMensal/{idUsuario}',  ['as' => 'rotary.entidade.demandaMensal',  'uses' => 'Rotary\HomeController@demandaMensal']);
     Route::get('/home/necessidades/novas',                  ['as' => 'rotary.home.necessidades.novas', 'uses' => 'Rotary\HomeController@novas_necessidades']);
     Route::get('/home/doacoes/novas',                       ['as' => 'rotary.home.doacoes.novas',      'uses' => 'Rotary\HomeController@novas_doacoes']);
+    Route::get('/home/doacoes/andamento',                   ['as' => 'rotary.home.doacoes.andamento',  'uses' => 'Rotary\HomeController@doacaoes_andamento']);
 
     //funções rotary.entidade
     Route::post('/entidade/novo',                       ['as' => 'rotary.entidade.novo',                'uses' => 'Rotary\EntidadeController@novo']);
@@ -33,7 +34,10 @@ Route::group(['middleware' => ['checaPermissao:rotary'] ,'prefix' => 'painel/rot
     Route::get('/pedido/excluir/{idPedido}',            ['as' => 'rotary.pedido.excluir',              'uses' => 'Rotary\EntidadeController@excluirPedido']);
 
     //funções rotary.doacoes
-    Route::get('/doacao/aprovar/{idDoacao}',            ['as' => 'rotary.doacao.aprovar',              'uses' => 'Rotary\DoadorController@aprovarDoacao']);
-    Route::get('/doacao/excluir/{idDoacao}',            ['as' => 'rotary.doacao.excluir',              'uses' => 'Rotary\DoadorController@excluirDoacao']);
+    Route::get('/doacao/aprovar/{idDoacao}',            ['as' => 'rotary.doacao.aprovar',               'uses' => 'Rotary\DoadorController@aprovarDoacao']);
+    Route::get('/doacao/excluir/{idDoacao}',            ['as' => 'rotary.doacao.excluir',               'uses' => 'Rotary\DoadorController@excluirDoacao']);
+    Route::get('/doacao/marcarComoEstoque/{idDoacao}',  ['as' => 'rotary.doacao.marcarComoEstoque',     'uses' => 'Rotary\DoadorController@marcarComoEstoque']);
+    Route::get('/doacao/marcarComoEntregue/{idDoacao}', ['as' => 'rotary.doacao.marcarComoEntregue',    'uses' => 'Rotary\DoadorController@marcarComoEntregue']);
+    Route::post('/doacao/getByDoacaoFiltro',            ['as' => 'rotary.doacao.getByDoacaoFiltro',     'uses' => 'Rotary\DoadorController@getByDoacaoFiltro']);
 
 });
