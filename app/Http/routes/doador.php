@@ -13,6 +13,7 @@ Route::group(['middleware' => ['checaPermissao:doador'] ,'prefix' => 'painel/doa
     Route::get('/home',             ['as' => 'doador.home',         'uses' => 'Doador\HomeController@home']);
     Route::get('/home/doacoes',     ['as' => 'doador.home.doacoes', 'uses' => 'Doador\HomeController@doacoes']);
     Route::get('/home/perfil',      ['as' => 'doador.home.perfil',  'uses' => 'Doador\HomeController@perfil']);
+    Route::get('/home/update',      ['as' => 'doador.update',       'uses' => 'Doador\HomeController@update']);
 
     //rotas doacao
     Route::post('/doacao/novo',     ['as' => 'doador.doacao.novo',      'uses' => 'Doador\DoacaoController@novo']);

@@ -110,10 +110,9 @@ class DoadorRepository
     }
 
 
-    public function getAllNovasDoacoes($idDoador){
+    public function getAllNovasDoacoes(){
         try {
-            $doador = Doador::query()->find($idDoador);
-            return $doador->doacoes()->get();
+            return Doacao::query()->where('status','=', 1)->get();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
             throw new Exception('Erro ao recuperar doações: ' . $e->getMessage());
@@ -122,7 +121,8 @@ class DoadorRepository
 
     public function getAllDoacoesByDoador($idDoador){
         try {
-            return Doacao::query()->where('status','=', 1)->get();
+            $doador = Doador::query()->find($idDoador);
+            return $doador->doacoes()->get();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
             throw new Exception('Erro ao recuperar doações: ' . $e->getMessage());
@@ -163,7 +163,7 @@ class DoadorRepository
             $produto = $pedido->produto()->first();
             $statusAnterior = $doacao->status;
 
-            if($statusAnterior == 1){
+            if(strcmp($statusAnterior, 'Em Aprovacação') == 0){
                 $doacao->status = 2;
                 $produto->qtd = $produto->qtd - $doacao->qtd_item;
             }

@@ -31,7 +31,6 @@ class DoadorController extends Controller
 
     public function aprovarDoacao($idDoacao){
         try{
-
             $this->doadorDB->aprovarDoacao($idDoacao);
 
             return back()

@@ -38,16 +38,22 @@ class HomeController extends Controller
     public function doacoes(){
         try{
             $doador = $this->doadorDB->getByUserId(Auth::user()->id);
-            $doacoes = $this->doadorDB->getAllNovasDoacoes($doador->id);
+            $doacoes = $this->doadorDB->getAllDoacoesByDoador($doador->id);
 
             return view('acompanhar_doacoes', compact('doacoes', 'doador'));
         } catch (Exception $e){
             return back()->withErrors('Erro ao recuperar doações: ' . $e->getMessage());
         }
-        dd($doacoes);
     }
 
     public function perfil(){
-        dd('perfil do cliente');
+        $user_atual = Auth::user();
+        $doador = $this->doadorDB->getByUserId($user_atual->id);
+        $endereco_principal = $user_atual->enderecos()->first();
+        return view('perfil', compact('doador', 'user_atual', 'endereco_principal'));
+    }
+
+    public function update(){
+        dd($this->request);
     }
 }

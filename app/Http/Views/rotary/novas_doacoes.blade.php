@@ -31,6 +31,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    {{--dd($doacoes)--}}
                                     @foreach ($doacoes as $doacao)
                                         @php
                                             $doador = $doadorDB->getById($doacao->doador_id);
