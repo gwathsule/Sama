@@ -19,7 +19,7 @@
                             $userDB = new \App\Http\Models\Users\UserRepository();
                         @endphp
                         <div class="card-body">
-                            <form action="{{route('rotary.doacao.getByDoacaoFiltro')}}" method="post">
+                            <form action="{{route('rotary.doacao.getByDoacaoFiltro')}}" method="get">
                                 {{csrf_field()}}
                                 <div class="form-group row">
                                     <label class="col-sm-2 form-control-label">STATUS</label>
@@ -64,12 +64,6 @@
                                             <td>{{$doacao->dataDisponivel}}</td>
                                             <td>{{$doacao->status}}</td>
                                             <td>
-                                                <a  href="{{route('rotary.doacao.aprovar', ['idDoacao' => $doacao->id])}}">
-                                                    <button class="btn-group btn-default" title="Aprovado (pronto para buscar)">
-                                                        <i class="fa fa-check-circle"></i>
-                                                    </button>
-                                                </a>
-
                                                 <a href="{{route('rotary.doacao.marcarComoEstoque', ['idDoacao' => $doacao->id])}}" >
                                                     <button class="btn-group btn-warning" title="Em estoque">
                                                         <i class="fa fa-archive"></i>

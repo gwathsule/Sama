@@ -34,6 +34,7 @@
                 <form action="{{route('doador.update')}}" class="" enctype="multipart/form-data" method="post">
                     <div class="col-md-6">
                         {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{$doador->id}}">
                         <div class="form-group">
                             <div class="controls">
                                 <input name="email" style="display:none">
@@ -164,13 +165,13 @@
 
                         <div class="form-group">
                             <div class="controls">
-                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Senha" name="password" maxlength="20" required>
+                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Senha" name="password" maxlength="20">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="controls">
-                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Repita a senha" name="password_confirmation" maxlength="20" required>
+                                <input type="password" class="form-control" autocomplete="new-password" placeholder="Repita a senha" name="password_confirmation" maxlength="20">
                             </div>
                         </div>
                         @if (count($errors) > 0)

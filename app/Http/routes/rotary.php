@@ -38,6 +38,6 @@ Route::group(['middleware' => ['checaPermissao:rotary'] ,'prefix' => 'painel/rot
     Route::get('/doacao/excluir/{idDoacao}',            ['as' => 'rotary.doacao.excluir',               'uses' => 'Rotary\DoadorController@excluirDoacao']);
     Route::get('/doacao/marcarComoEstoque/{idDoacao}',  ['as' => 'rotary.doacao.marcarComoEstoque',     'uses' => 'Rotary\DoadorController@marcarComoEstoque']);
     Route::get('/doacao/marcarComoEntregue/{idDoacao}', ['as' => 'rotary.doacao.marcarComoEntregue',    'uses' => 'Rotary\DoadorController@marcarComoEntregue']);
-    Route::post('/doacao/getByDoacaoFiltro',            ['as' => 'rotary.doacao.getByDoacaoFiltro',     'uses' => 'Rotary\DoadorController@getByDoacaoFiltro']);
+    Route::get('/doacao/getByDoacaoFiltro',            ['as' => 'rotary.doacao.getByDoacaoFiltro',      'uses' => 'Rotary\DoadorController@getByDoacaoFiltro']);
 
 });

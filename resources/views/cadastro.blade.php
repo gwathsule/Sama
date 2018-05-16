@@ -81,7 +81,7 @@
                             </div>
                         </div>
 
-                        <div id="infoPessoaJuridica">
+                        <div id="infoPessoaJuridica" style="display: none">
                             <div class="form-group">
                                 <div class="controls">
                                     <input name="razao" style="display:none">
@@ -129,7 +129,7 @@
                         <div class="form-group">
                             <div class="controls">
                                 <input name="numero" style="display:none">
-                                <input type="number" class="form-control" placeholder="Número da resodência" id="numero" value="{{old('numero')}}" name="numero" autocomplete="off" required>
+                                <input type="number" class="form-control" placeholder="Número da residência" id="numero" value="{{old('numero')}}" name="numero" autocomplete="off" required>
                             </div>
                         </div>
 

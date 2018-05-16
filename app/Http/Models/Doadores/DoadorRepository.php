@@ -63,6 +63,128 @@ class DoadorRepository
             ]);
     }
 
+    public function validarEdicaoPessoaFisica($info_editadas){
+        return
+            $validator = Validator::make($info_editadas, [
+                'email' => 'sometimes|max:255|email',
+                'celular' => 'sometimes|max:15',
+                'telefone' => 'sometimes|max:14',
+                'nome' => 'sometimes|max:255',
+                'cpf' => 'sometimes|max:14',
+                'razao' => 'sometimes|max:255',
+                'cnpj' => 'sometimes|max:19',
+                'contato' => 'sometimes|max:255',
+                'logotipo' => 'sometimes|file|image',
+                'cep' => 'sometimes|max:255',
+                'rua' => 'sometimes|max:255',
+                'numero' => 'sometimes|max:255',
+                'bairro' => 'sometimes|max:255',
+                'cidade' => 'sometimes|max:255',
+                'uf' => 'sometimes|max:255',
+                'pais' => 'sometimes|max:255',
+                'password' => 'sometimes|confirmed',
+            ]);
+    }
+
+    public function validarEdicaoPessoaJuridica($info_editadas){
+        return
+            $validator = Validator::make($info_editadas, [
+                'email' => 'sometimes|max:255|email',
+                'celular' => 'sometimes|max:15',
+                'telefone' => 'sometimes|max:14',
+                'nome' => 'sometimes|max:255',
+                'cpf' => 'sometimes|max:14',
+                'contato' => 'sometimes|max:255',
+                'razao' => 'sometimes|max:255',
+                'cnpj' => 'sometimes|max:19',
+                'logotipo' => 'sometimes|file|image',
+                'cep' => 'sometimes|max:255',
+                'rua' => 'sometimes|max:255',
+                'numero' => 'sometimes|max:255',
+                'bairro' => 'sometimes|max:255',
+                'cidade' => 'sometimes|max:255',
+                'uf' => 'sometimes|max:255',
+                'pais' => 'sometimes|max:255',
+                'password' => 'sometimes|confirmed',
+            ]);
+    }
+
+    public function editar($nova_info, $idUsuario, $tipoUsuario){
+        DB::connection('mysql')->beginTransaction();
+        try {
+            $user_doador = Doador::query()->find($idUsuario);
+            $user = User::query()->find($user_doador->user_id);
+            $endereco = $user->enderecos()->first();
+
+            if(strcmp($tipoUsuario, "pessoaFisica") == 0){
+                if(isset($nova_info['nome'])){
+                    $user_doador->name = $nova_info['nome'];
+                    $user->name = $nova_info['nome'];
+                }
+
+                if(isset($nova_info['cpf']))
+                    $user_doador->cpf = $this->soNumero($nova_info['cpf']);
+
+            } else {
+                if(isset($nova_info['razao'])){
+                    $user_doador->name = $nova_info['razao'];
+                    $user->name = $nova_info['razao'];
+                }
+
+                if(isset($nova_info['cnpj']))
+                    $user_doador->cnpj = $this->soNumero($nova_info['cnpj']);
+
+                if(isset($nova_info['contato']))
+                    $user_doador->contato = $nova_info['contato'];
+
+            }
+
+            if(isset($nova_info['email'])){
+                $user_doador->email = $nova_info['email'];
+                $user->email = $nova_info['email'];
+            }
+
+            if(isset($nova_info['password']))
+                $user->password = bcrypt($nova_info['password']);
+
+            if(isset($nova_info['telefone']))
+                $user_doador->telefone = $this->soNumero($nova_info['telefone']);
+
+            if(isset($nova_info['celular']))
+                $user_doador->celular = $this->soNumero($nova_info['celular']);
+
+            if(isset($nova_info['cep']))
+                $endereco->cep = $this->soNumero($nova_info['cep']);
+
+            if(isset($nova_info['rua']))
+                $endereco->logradouro = $nova_info['rua'];
+
+            if(isset($nova_info['numero']))
+                $endereco->numero = $nova_info['numero'];
+
+            if(isset($nova_info['bairro']))
+                $endereco->bairro = $nova_info['bairro'];
+
+            if(isset($nova_info['cidade']))
+                $endereco->cidade = $nova_info['cidade'];
+
+            if(isset($nova_info['uf']))
+                $endereco->uf = $nova_info['uf'];
+
+            if(isset($nova_info['pais']))
+                $endereco->pais = $nova_info['pais'];
+
+            $endereco->update();
+            $user->update();
+            $user_doador->update();
+            
+        } catch (Exception $e){
+            DB::connection('mysql')->rollBack();
+            throw new Exception('Erro ao editar informações: ' . $e->getMessage());
+        }
+        DB::connection('mysql')->commit();
+    }
+
     public function validarNovaDoacao(Request $request){
         return
             Validator::make($request->all(), [
@@ -322,7 +444,7 @@ class DoadorRepository
     }
 
 
-    function soNumero($str) {
+    private function soNumero($str) {
         return preg_replace("/[^0-9]/", "", $str);
     }
 }
