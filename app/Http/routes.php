@@ -27,10 +27,10 @@ $route_partials = [
 /** Route Partial Loadup
 ====================================================================== */
 foreach ($route_partials as $partial) {
-    $file = __DIR__.'/Routes/'.$partial.'.php';
+    $file = __DIR__.'/routes/'.$partial.'.php';
     if ( !file_exists($file) )
     {
-        $msg = "Route partial [{$partial}] not found!";
+        $msg = "Route partial [{$file}] not found!";
         throw new Exception($msg);
     }
     require_once $file;
