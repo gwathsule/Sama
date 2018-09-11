@@ -17,11 +17,11 @@
 
 //ORDER MATTERS!
 $route_partials = [
-    'Admin',
-    'Doador',
-    'Rotary',
-    'Entidade',
-    'Commons',
+    'admin',
+    'doador',
+    'rotary',
+    'entidade',
+    'commons',
     'Init',
 ];
 /** Route Partial Loadup
