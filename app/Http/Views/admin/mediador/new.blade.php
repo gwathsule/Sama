@@ -11,7 +11,7 @@
                 <h4>CADASTRO DE ROTARIANO</h4>
             </div>
             <div class="card-body">
-                <form action="{{route('admin.rotary.novo')}}"  method="post" class="form-horizontal">
+                <form action="{{route('admin.mediador.novo')}}"  method="post" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">NOME</label>

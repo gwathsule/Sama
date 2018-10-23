@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
         $admin = Role::where('name', 'adm')->first();
         $doador = Role::where('name', 'doador')->first();
         $entidade = Role::where('name', 'entidade')->first();
-        $rotary = Role::where('name', 'rotary')->first();
+        $mediador = Role::where('name', 'mediador')->first();
 
         if (!isset($admin->id)) {
             Role::create([
@@ -38,12 +38,12 @@ class RolesTableSeeder extends Seeder
             ]);
             echo "Função 'entidade' criada.\n";
         }
-        if (!isset($rotary->id)) {
+        if (!isset($mediador->id)) {
             Role::create([
-                'name' => 'rotary',
-                'label' => 'Rotary     '
+                'name' => 'mediador',
+                'label' => 'Mediador     '
             ]);
-            echo "Função 'rotary' criada.\n";
+            echo "Função 'mediador' criada.\n";
         }
     }
 }

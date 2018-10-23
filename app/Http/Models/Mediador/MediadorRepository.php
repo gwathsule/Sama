@@ -6,7 +6,7 @@
  * Time: 20:32
  */
 
-namespace App\Http\Models\Rotaries;
+namespace App\Http\Models\Mediador;
 
 use DB;
 use Validator;

@@ -11,13 +11,13 @@ Route::group(['middleware' => ['checaPermissao:admin'] ,'prefix' => 'painel/admi
     Route::get('/', 'PanelController@homeAdmin');
     Route::get('/home',                         ['as' => 'admin.home',                  'uses' => 'Admin\HomeController@home']);
     //pages
-    Route::get('/home/new/rotary',              ['as' => 'admin.home.new.rotary',       'uses' => 'Admin\HomeController@new_rotary_index']);
-    Route::get('/home/list/rotary',             ['as' => 'admin.home.list.rotary',      'uses' => 'Admin\HomeController@list_rotary_index']);
-    Route::get('/home/edit/rotary/{idUsuario}', ['as' => 'admin.home.edit.rotary',      'uses' => 'Admin\HomeController@edit_rotary_index']);
+    Route::get('/home/new/mediador',              ['as' => 'admin.home.new.mediador',       'uses' => 'Admin\HomeController@new_mediador_index']);
+    Route::get('/home/list/mediador',             ['as' => 'admin.home.list.mediador',      'uses' => 'Admin\HomeController@list_mediador_index']);
+    Route::get('/home/edit/mediador/{idUsuario}', ['as' => 'admin.home.edit.mediador',      'uses' => 'Admin\HomeController@edit_mediador_index']);
 
-    //funções admin.rotary
-    Route::post('/rotary/novo',                 ['as' => 'admin.rotary.novo',           'uses' => 'Admin\RotaryController@novo']);
-    Route::post('/rotary/editar',               ['as' => 'admin.rotary.editar',         'uses' => 'Admin\RotaryController@editar']);
-    Route::get('/rotary/excluir/{idUsuario}',   ['as' => 'admin.rotary.excluir',        'uses' => 'Admin\RotaryController@excluir']);
+    //funções admin.mediador
+    Route::post('/mediador/novo',                 ['as' => 'admin.mediador.novo',           'uses' => 'Admin\mediadorController@novo']);
+    Route::post('/mediador/editar',               ['as' => 'admin.mediador.editar',         'uses' => 'Admin\mediadorController@editar']);
+    Route::get('/mediador/excluir/{idUsuario}',   ['as' => 'admin.mediador.excluir',        'uses' => 'Admin\mediadorController@excluir']);
 
 });

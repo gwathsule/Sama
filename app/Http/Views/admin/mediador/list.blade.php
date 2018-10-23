@@ -36,7 +36,7 @@
                                                     <td>{{$usuario->celular}}</td>
                                                     <td>{{$usuario->email}}</td>
                                                     <td>
-                                                        <a href="{{route('admin.home.edit.rotary', ['idUsuario' => $usuario->id])}}">
+                                                        <a href="{{route('admin.home.edit.mediador', ['idUsuario' => $usuario->id])}}">
                                                             <button class="btn-primary" title="Editar">
                                                                 <i class="fa fa-pencil"></i>
                                                             </button>
@@ -65,7 +65,7 @@
                                                                 <h4 class="align-items-center">EXCLUIR O USUÁRIO COM AS INFORMAÇÕES ACIMA?</h4>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <a href="{{route('admin.rotary.excluir', ['idUsuario' => $usuario->id])}}"><button class="btn btn-danger">Excluir</button></a>
+                                                                <a href="{{route('admin.mediador.excluir', ['idUsuario' => $usuario->id])}}"><button class="btn btn-danger">Excluir</button></a>
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                             </div>
                                                         </div>

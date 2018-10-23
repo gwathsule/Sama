@@ -18,7 +18,7 @@ class PermissionsTableSeeder extends Seeder
         $admin = Permission::where('name', 'adm')->first();
         $doador = Permission::where('name', 'doador')->first();
         $entidade = Permission::where('name', 'entidade')->first();
-        $rotary = Permission::where('name', 'rotary')->first();
+        $mediador = Permission::where('name', 'mediador')->first();
 
         if (!isset($admin->id)) {
             $admin = Permission::create([
@@ -43,19 +43,19 @@ class PermissionsTableSeeder extends Seeder
             echo "Permissão 'entidade' criada.\n";
         }
 
-        if (!isset($rotary->id)) {
-            $rotary = Permission::create([
-                'name' => 'rotary',
-                'label' => 'Permissões de usuário rotary'
+        if (!isset($mediador->id)) {
+            $mediador = Permission::create([
+                'name' => 'mediador',
+                'label' => 'Permissões de usuário mediador'
             ]);
-            echo "Permissão 'rotary' criada.\n";
+            echo "Permissão 'mediador' criada.\n";
         }
 
         //Relaciona com Roles
         $roleAdmin = Role::where('name', 'adm')->first();
         $roleDoador = Role::where('name', 'doador')->first();
         $roleEntidade = Role::where('name', 'entidade')->first();
-        $roleRotary = Role::where('name', 'rotary')->first();
+        $roleMediador = Role::where('name', 'mediador')->first();
 
         if($admin->roles()->count() == 0)
             $admin->roles()->attach($roleAdmin->id);
@@ -66,7 +66,7 @@ class PermissionsTableSeeder extends Seeder
         if($entidade->roles()->count() == 0)
             $entidade->roles()->attach($roleEntidade->id);
 
-        if($rotary->roles()->count() == 0)
-            $rotary->roles()->attach($roleRotary->id);
+        if($mediador->roles()->count() == 0)
+            $mediador->roles()->attach($roleMediador->id);
     }
 }

@@ -17,7 +17,7 @@
 
             <div class="card-body">
                 @if(sizeof($entidade->demandaMensal()->get()) == 0)
-                    <form action="{{route('rotary.entidade.novaDemanda')}}"  method="post" class="form-horizontal">
+                    <form action="{{route('mediador.entidade.novaDemanda')}}"  method="post" class="form-horizontal">
                         <p>A Entidade <b>{{$entidade->name}}</b> não possui uma demanda mensal cadastrada, deseja criar uma agora?</p>
                         <hr>
                         {{ csrf_field() }}
@@ -35,7 +35,7 @@
                         </div>
                     </form>
                 @else
-                    <form class="form-control-lg" action="{{route('rotary.entidade.demanda.novoProduto')}}"  method="post" class="form-horizontal">
+                    <form class="form-control-lg" action="{{route('mediador.entidade.demanda.novoProduto')}}"  method="post" class="form-horizontal">
                         {{ csrf_field() }}
                         <input type="hidden" name="idEntidade" value="{{$entidade->id}}">
 
@@ -166,7 +166,7 @@
                                                         <h4 class="align-items-center">EXCLUIR O PRODUTO COM AS INFORMAÇÕES ACIMA?</h4>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="{{route('rotary.entidade.demanda.excluirProduto', ['idEntidade' => $entidade->id, 'idProduto' => $produto->id])}}"><button class="btn btn-danger">Excluir</button></a>
+                                                        <a href="{{route('mediador.entidade.demanda.excluirProduto', ['idEntidade' => $entidade->id, 'idProduto' => $produto->id])}}"><button class="btn btn-danger">Excluir</button></a>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                     </div>
                                                 </div>

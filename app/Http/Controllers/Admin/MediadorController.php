@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use App\Http\Controllers\Controller;
-use App\Http\Models\Rotaries\RotaryRepository;
+use App\Http\Models\Mediador\RotaryRepository;
 use Illuminate\Http\Request;
 
 class RotaryController extends Controller

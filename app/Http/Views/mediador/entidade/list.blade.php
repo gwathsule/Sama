@@ -36,13 +36,13 @@
                                                 <td>{{$entidade->celular}}</td>
                                                 <td>{{$entidade->email}}</td>
                                                 <td>
-                                                    <a href="{{route('rotary.entidade.demandaMensal', ['idEntidade' => $entidade->id])}}">
+                                                    <a href="{{route('mediador.entidade.demandaMensal', ['idEntidade' => $entidade->id])}}">
                                                         <button class="btn-primary" title="Cadastrar Demanda mensal">
                                                             <i class="fa fa-calendar-plus-o"></i>
                                                         </button>
                                                     </a>
 
-                                                    <a href="{{route('rotary.home.edit.entidade', ['idEntidade' => $entidade->id])}}">
+                                                    <a href="{{route('mediador.home.edit.entidade', ['idEntidade' => $entidade->id])}}">
                                                         <button class="btn-primary" title="Editar">
                                                             <i class="fa fa-pencil"></i>
                                                         </button>
@@ -72,7 +72,7 @@
                                                             <h4 class="align-items-center">EXCLUIR O USUÁRIO COM AS INFORMAÇÕES ACIMA?</h4>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <a href="{{route('rotary.entidade.excluir', ['idUsuario' => $entidade->id])}}"><button class="btn btn-danger">Excluir</button></a>
+                                                            <a href="{{route('mediador.entidade.excluir', ['idUsuario' => $entidade->id])}}"><button class="btn btn-danger">Excluir</button></a>
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                         </div>
                                                     </div>

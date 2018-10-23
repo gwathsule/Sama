@@ -11,7 +11,7 @@
                 <h4>CADASTRO DE ENTIDADES</h4>
             </div>
             <div class="card-body">
-                <form action="{{route('rotary.entidade.novo')}}"  method="post" class="form-horizontal">
+                <form action="{{route('mediador.entidade.novo')}}"  method="post" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">NOME</label>

@@ -61,7 +61,7 @@
                                                         <h4 class="align-items-center">APROVAR A NECESSIDADE COM AS INFORMAÇÕES ACIMA?</h4>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="{{route('rotary.pedido.aprovar', ['idPedido' => $pedido->id])}}"><button class="btn btn-primary">APROVAR</button></a>
+                                                        <a href="{{route('mediador.pedido.aprovar', ['idPedido' => $pedido->id])}}"><button class="btn btn-primary">APROVAR</button></a>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                     </div>
                                                 </div>
@@ -84,7 +84,7 @@
                                                         <h4 class="align-items-center">NÃO APROVAR A NECESSIDADE COM AS INFORMAÇÕES ACIMA?</h4>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="{{route('rotary.pedido.desaprovar', ['idPedido' => $pedido->id])}}"><button class="btn btn-danger">NÃO APROVAR</button></a>
+                                                        <a href="{{route('mediador.pedido.desaprovar', ['idPedido' => $pedido->id])}}"><button class="btn btn-danger">NÃO APROVAR</button></a>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                     </div>
                                                 </div>
@@ -107,7 +107,7 @@
                                                         <h4 class="align-items-center">APAGAR A NECESSIDADE COM AS INFORMAÇÕES ACIMA?</h4>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="{{route('rotary.pedido.excluir', ['idPedido' => $pedido->id])}}"><button class="btn btn-danger">APAGAR</button></a>
+                                                        <a href="{{route('mediador.pedido.excluir', ['idPedido' => $pedido->id])}}"><button class="btn btn-danger">APAGAR</button></a>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                     </div>
                                                 </div>

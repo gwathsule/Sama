@@ -16,7 +16,7 @@ class VerificaFuncao
     public function handle($request, Closure $next)
     {
         $userRoles = auth()->user()->roles;
-        $rolesPermitidas = ['adm', 'doador', 'entidade', 'rotary'];
+        $rolesPermitidas = ['adm', 'doador', 'entidade', 'mediador'];
 
         foreach ($userRoles as $role) {
             if (in_array($role->name, $rolesPermitidas)) {

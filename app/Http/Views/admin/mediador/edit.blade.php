@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
                 @if(isset($usuario))
-                    <form action="{{route('admin.rotary.editar')}}"  method="post" class="form-horizontal">
+                    <form action="{{route('admin.mediador.editar')}}"  method="post" class="form-horizontal">
                         {{ csrf_field() }}
                         <input type="hidden" value="{{$usuario->id}}" name="id">
                         <div class="form-group row">

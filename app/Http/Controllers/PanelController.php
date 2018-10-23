@@ -38,8 +38,8 @@ class PanelController extends Controller
                 case 'Entidade':
                     return redirect(route('entidade.home'));
                     break;
-                case 'Rotary':
-                    return redirect(route('rotary.home'));
+                case 'Mediador':
+                    return redirect(route('mediador.home'));
                     break;
                 default:
                     return redirect('/logout');
@@ -62,7 +62,7 @@ class PanelController extends Controller
         return redirect(route('entidade.home'));
     }
 
-    public function homeRotary(){
-        return redirect(route('rotary.home'));
+    public function homeMediador(){
+        return redirect(route('mediador.home'));
     }
 }

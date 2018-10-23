@@ -24,6 +24,7 @@ class CreateEntidadesTable extends Migration
             $table->string('telefone', 10);
             $table->string('celular', 11);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
