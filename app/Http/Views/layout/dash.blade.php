@@ -55,8 +55,8 @@
                     @include('panel::layout.menu-admin')
                 @elseif(auth::user()->tipo == 'Entidade')
                     @include('panel::layout.menu-entidade')
-                @elseif(auth::user()->tipo == 'Rotary')
-                    @include('panel::layout.menu-rotary')
+                @elseif(auth::user()->tipo == 'Mediador')
+                    @include('panel::layout.menu-mediador')
                 @endif
             </ul>
         </div>

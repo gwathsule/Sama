@@ -19,7 +19,7 @@
 $route_partials = [
     'admin',
     'doador',
-    'rotary',
+    'mediador',
     'entidade',
     'commons',
     'Init',

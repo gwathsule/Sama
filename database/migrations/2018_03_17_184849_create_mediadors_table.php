@@ -18,7 +18,7 @@ class CreateMediadorsTable extends Migration
             $table->string('cpf', 11)->unique()->nullable();
             $table->string('cnpj', 11)->unique()->nullable();
             $table->string('celular', 11);
-            $table->string('telefone', 10);
+            $table->string('telefone', 10)->nullable();
             $table->string('nome_grupo');
             $table->string('nome_responsavel');
             $table->integer('quantidade_membros');

@@ -6,7 +6,7 @@
  * Date: 05/03/2018
  * Time: 20:05
  */
-namespace App\Http\Controllers\Rotary;
+namespace App\Http\Controllers\mediador;
 
 use App\Http\Models\Entidades\EntidadeRepository;
 use App\Http\Models\Users\UserRepository;
@@ -34,18 +34,18 @@ class HomeController extends Controller
     }
 
     public function home(){
-        return view('panel::rotary.home');
+        return view('panel::mediador.home');
     }
 
     public function new_entidade_index(){
-        return view('panel::rotary.entidade.new');
+        return view('panel::mediador.entidade.new');
     }
 
     public function edit_entidade_index($idUsuario){
         try {
             $entidade = $this->entidadeDB->getById($idUsuario);
             $user = $this->userDB->getById($entidade->user_id);
-            return view('panel::rotary.entidade.edit', compact('entidade', 'user'));
+            return view('panel::mediador.entidade.edit', compact('entidade', 'user'));
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
@@ -55,7 +55,7 @@ class HomeController extends Controller
     public function list_entidade_index(){
         try{
             $lista = $this->entidadeDB->listar();
-            return view('panel::rotary.entidade.list', compact('lista'));
+            return view('panel::mediador.entidade.list', compact('lista'));
         }catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
@@ -65,7 +65,7 @@ class HomeController extends Controller
     public function demandaMensal($idEntidade){
         try{
             $entidade = $this->entidadeDB->getById($idEntidade);
-            return view('panel::rotary.entidade.demandaMensal', compact('entidade'));
+            return view('panel::mediador.entidade.demandaMensal', compact('entidade'));
         } catch (Exception $e){
             return back()
                 ->withErrors($e->getMessage());
@@ -75,7 +75,7 @@ class HomeController extends Controller
     public  function novas_necessidades(){
         try{
             $pedidos = $this->entidadeDB->getAllNovosPedidos();
-            return view('panel::rotary.novas_necessidades', compact('pedidos'));
+            return view('panel::mediador.novas_necessidades', compact('pedidos'));
         } catch (Exception $e){
             dd($e->getMessage());
             return back()

@@ -15,11 +15,11 @@ use App\Http\Models\Users\Role;
 use App\Http\Models\Users\User;
 use Illuminate\Http\Request;
 
-class RotaryRepository
+class mediadorRepository
 {
 
     /**
-     * RotaryRepository constructor.
+     * mediadorRepository constructor.
      */
     public function __construct()
     {
@@ -28,22 +28,31 @@ class RotaryRepository
     public function validarNovo(Request $request){
         return
             $validator = Validator::make($request->all(), [
-                'nome' => 'required|max:255',
+                'nome_grupo' => 'required|max:255',
                 'email' => 'required|unique:users|max:255',
-                'cpf' => 'required|unique:rotaries|max:11|min:11',
-                'celular' => 'required|max:11|min:10',
+                'cpf' => 'unique:mediadors|max:11|min:11',
+                'cnpj' => 'unique:mediadors|max:14|min:14',
+                'celular' => 'required|max:11|min:11',
+                'telefone' => 'max:10|min:10',
                 'password' => 'required|max:60|confirmed',
+                'nome_responsavel' => 'required|max:255',
+                'quantidade_membros' => 'required|integer',
             ]);
     }
 
     public function validarEdicao($info_editadas){
         return
             $validator = Validator::make($info_editadas, [
-                'nome' => 'sometimes|max:255',
+                'nome_grupo' => 'sometimes|max:255',
                 'email' => 'sometimes|unique:users|max:255',
-                'cpf' => 'sometimes|unique:rotaries|max:11|min:11',
-                'celular' => 'sometimes|max:11|min:10',
-                'password' => 'sometimes|max:60|confirmed',
+                'cpf' => 'sometimes|unique:mediadors|max:11|min:11',
+                'cnpj' => 'sometimes|unique:mediadors|max:14|min:14',
+                'celular' => 'sometimes|max:11|min:11',
+                'telefone' => 'sometimes|max:10|min:10',
+                'password' => 'sometimes|required|max:60|confirmed',
+                'nome_responsavel' => 'sometimes|max:255',
+                'quantidade_membros' => 'sometimes|max:255',
+
             ]);
     }
 
@@ -51,7 +60,7 @@ class RotaryRepository
         DB::connection('mysql')->beginTransaction();
         try {
             $novo_user = User::create([
-                'name' => $request->nome,
+                'name' => $request->nome_grupo,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'tipo' => 3,
@@ -59,33 +68,39 @@ class RotaryRepository
 
             $this->setRole($novo_user);
 
-            $novo_rotary = Rotary::create([
-                'celular' => $request->celular,
+            $novo_mediador = mediador::create([
+                'nome_grupo' => $request->nome_grupo,
+                'nome_responsavel' => $request->nome_responsavel,
                 'cpf' => $request->cpf,
+                'cnpj' => $request->cnpj,
+                'celular' => $request->celular,
+                'telefone' => $request->telefone,
+                'quantidade_membros' => $request->quantidade_membros,
                 'user_id' => $novo_user->id,
-                'name' => $request->nome,
-                'email' => $request->email
+                'email' => $request->email,
+                'situacao' => 2
             ]);
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            throw new Exception('Erro ao cadastrar novo usuário Rotary: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar novo usuário mediador: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
     }
 
     public function editar($nova_info, $idUsuario){
+
         DB::connection('mysql')->beginTransaction();
         try {
-            $user_rotary = Rotary::query()->find($idUsuario);
-            $user = User::query()->find($user_rotary->user_id);
+            $user_mediador = mediador::query()->find($idUsuario);
+            $user = User::query()->find($user_mediador->user_id);
 
-            if(isset($nova_info['nome'])){
-                $user_rotary->name = $nova_info['nome'];
-                $user->name = $nova_info['nome'];
+            if(isset($nova_info['nome_grupo'])){
+                $user_mediador->nome_grupo = $nova_info['nome_grupo'];
+                $user->name = $nova_info['nome_grupo'];
             }
 
             if(isset($nova_info['email'])){
-                $user_rotary->email = $nova_info['email'];
+                $user_mediador->email = $nova_info['email'];
                 $user->email = $nova_info['email'];
             }
 
@@ -93,23 +108,35 @@ class RotaryRepository
                 $user->password = bcrypt($nova_info['password']);
 
             if(isset($nova_info['cpf']))
-                $user_rotary->name = $nova_info['cpf'];
+                $user_mediador->cpf = $nova_info['cpf'];
+
+            if(isset($nova_info['cnpj']))
+                $user_mediador->cnpj = $nova_info['cnpj'];
 
             if(isset($nova_info['celular']))
-                $user_rotary->name = $nova_info['celular'];
+                $user_mediador->celular = $nova_info['celular'];
+
+            if(isset($nova_info['telefone']))
+                $user_mediador->telefone = $nova_info['telefone'];
+
+            if(isset($nova_info['nome_responsavel']))
+                $user_mediador->nome_responsavel = $nova_info['nome_responsavel'];
+
+            if(isset($nova_info['quantidade_membros']))
+                $user_mediador->quantidade_membros = $nova_info['quantidade_membros'];
 
             $user->update();
-            $user_rotary->update();
+            $user_mediador->update();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            throw new Exception('Erro ao cadastrar novo usuário Rotary: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar novo usuário mediador: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
     }
 
     public function listar(){
         try{
-            return Rotary::all();
+            return mediador::all();
         } catch (Exception $e){
             throw new Exception('Erro ao listar usuários: ' . $e->getMessage());
         }
@@ -117,7 +144,7 @@ class RotaryRepository
 
     public function getById($idUsuario){
         try{
-            return Rotary::query()->find($idUsuario);
+            return mediador::query()->find($idUsuario);
         } catch (Exception $e){
             throw new Exception('Erro ao recuperar usuário do banco: ' . $e->getMessage());
         }
@@ -126,9 +153,9 @@ class RotaryRepository
     public function excluir($idUsuario){
         DB::connection('mysql')->beginTransaction();
         try {
-            $user_rotary = Rotary::query()->find($idUsuario);
-            $user = User::query()->find($user_rotary->user_id);
-            $user_rotary->delete();
+            $user_mediador = mediador::query()->find($idUsuario);
+            $user = User::query()->find($user_mediador->user_id);
+            $user_mediador->delete();
             $user->delete();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
@@ -139,7 +166,7 @@ class RotaryRepository
 
     private function setRole(User $user)
     {
-        $roleRotary = Role::where('name', 'rotary')->first();
-        $user->roles()->attach($roleRotary->id);
+        $rolemediador = Role::where('name', 'mediador')->first();
+        $user->roles()->attach($rolemediador->id);
     }
 }

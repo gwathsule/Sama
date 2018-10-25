@@ -114,8 +114,8 @@ class EntidadeRepository
 
     private function setRole(User $user)
     {
-        $roleRotary = Role::where('name', 'entidade')->first();
-        $user->roles()->attach($roleRotary->id);
+        $rolemediador = Role::where('name', 'entidade')->first();
+        $user->roles()->attach($rolemediador->id);
     }
 
     public function listar(){
@@ -367,7 +367,7 @@ class EntidadeRepository
             $user_entidade->update();
         } catch (Exception $e){
             DB::connection('mysql')->rollBack();
-            throw new Exception('Erro ao cadastrar novo usuário Rotary: ' . $e->getMessage());
+            throw new Exception('Erro ao cadastrar novo usuário mediador: ' . $e->getMessage());
         }
         DB::connection('mysql')->commit();
     }

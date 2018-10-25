@@ -1,5 +1,5 @@
 @extends('panel::layout.dash')
-@section('title') Cadastrar Rotariano @endsection
+@section('title') Cadastrar Mediador @endsection
 @section('content')
 
     @include('panel::layout.errors')
@@ -8,15 +8,15 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <h4>CADASTRO DE ROTARIANO</h4>
+                <h4>CADASTRO DE Mediador</h4>
             </div>
             <div class="card-body">
                 <form action="{{route('admin.mediador.novo')}}"  method="post" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">NOME</label>
+                        <label class="col-sm-2 form-control-label">NOME DO GRUPO</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nome" value="{{old('nome')}}" placeholder="Nome do colaborador" required>
+                            <input type="text" class="form-control" name="nome_grupo" value="{{old('nome_grupo')}}" placeholder="Nome do grupo mediador" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -28,15 +28,43 @@
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">CPF</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="cpf" value="{{old('cpf')}}" maxlength="11" placeholder="12345678900" minlength="11" required>
+                            <input type="text" class="form-control" name="cpf" value="{{old('cpf')}}" maxlength="11" placeholder="12345678900" minlength="11">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">CNPJ</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="cnpj" value="{{old('cnpj')}}" maxlength="14" placeholder="12345678900" minlength="14">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">CELULAR</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="celular" value="{{old('celular')}}" placeholder="27991234567" maxlength="11" minlength="10" required>
+                            <input type="text" class="form-control" name="celular" value="{{old('celular')}}" placeholder="27991234567" maxlength="11" minlength="11" required>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">TELEFONE</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="telefone" value="{{old('telefone')}}" placeholder="2731201234" maxlength="10" minlength="10" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">RESPONSÁVEL</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="nome_responsavel" value="{{old('nome_responsavel')}}" placeholder="Nome do responsável" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">QUANTIDADE DE MEMBROS</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="quantidade_membros" value="{{old('quantidade_membros')}}" required>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-sm-2 form-control-label">SENHA</label>
                         <div class="col-sm-10">

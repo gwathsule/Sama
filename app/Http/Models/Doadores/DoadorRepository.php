@@ -199,8 +199,8 @@ class DoadorRepository
 
     private function setRole(User $user)
     {
-        $roleRotary = Role::where('name', 'doador')->first();
-        $user->roles()->attach($roleRotary->id);
+        $rolemediador = Role::where('name', 'mediador')->first();
+        $user->roles()->attach($rolemediador->id);
     }
 
 

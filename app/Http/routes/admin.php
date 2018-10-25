@@ -16,8 +16,8 @@ Route::group(['middleware' => ['checaPermissao:admin'] ,'prefix' => 'painel/admi
     Route::get('/home/edit/mediador/{idUsuario}', ['as' => 'admin.home.edit.mediador',      'uses' => 'Admin\HomeController@edit_mediador_index']);
 
     //funções admin.mediador
-    Route::post('/mediador/novo',                 ['as' => 'admin.mediador.novo',           'uses' => 'Admin\mediadorController@novo']);
-    Route::post('/mediador/editar',               ['as' => 'admin.mediador.editar',         'uses' => 'Admin\mediadorController@editar']);
-    Route::get('/mediador/excluir/{idUsuario}',   ['as' => 'admin.mediador.excluir',        'uses' => 'Admin\mediadorController@excluir']);
+    Route::post('/mediador/novo',                 ['as' => 'admin.mediador.novo',           'uses' => 'Admin\MediadorController@novo']);
+    Route::post('/mediador/editar',               ['as' => 'admin.mediador.editar',         'uses' => 'Admin\MediadorController@editar']);
+    Route::get('/mediador/excluir/{idUsuario}',   ['as' => 'admin.mediador.excluir',        'uses' => 'Admin\MediadorController@excluir']);
 
 });

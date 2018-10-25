@@ -4,16 +4,12 @@
 <h5 class="sidenav-heading">USERS</h5>
 <li><a href="#addUsersDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user-plus"></i>Cadastro</a>
     <ul id="addUsersDropdown" class="collapse list-unstyled ">
-        <li><a href="{{route('admin.home.new.rotary')}}">Rotariano</a></li>
-        <li><a href="#">Entidade</a></li>
-        <li><a href="#">Doador</a></li>
+        <li><a href="{{route('admin.home.new.mediador')}}">Mediador</a></li>
     </ul>
 </li>
 <li><a href="#listUsersDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user-plus"></i>Listar</a>
     <ul id="listUsersDropdown" class="collapse list-unstyled ">
-        <li><a href="{{route('admin.home.list.rotary')}}">Rotarianos</a></li>
-        <li><a href="#">Entidades</a></li>
-        <li><a href="#">Doadores</a></li>
+        <li><a href="{{route('admin.home.list.mediador')}}">Mediadores</a></li>
     </ul>
 </li>
 <h5 class="sidenav-heading">Sistema</h5>

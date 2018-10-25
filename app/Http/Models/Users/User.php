@@ -32,7 +32,7 @@ class User extends Authenticatable
         if ($value == 2)
             return 'Entidade';
         if ($value == 3)
-            return 'Rotary';
+            return 'Mediador';
         if ($value == 6)
             return 'Admin';
         return 'Indefinido';

@@ -1,5 +1,5 @@
 @extends('panel::layout.dash')
-@section('title') Listar Rotarianos @endsection
+@section('title') Listar Mediadores @endsection
 @section('content')
 
     @include('panel::layout.errors')
@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <h4>LISTAR ROTARIANOS</h4>
+                <h4>LISTAR Mediadores</h4>
             </div>
             <div class="card-body">
                 @if(isset($lista) && sizeof($lista) > 0)
@@ -31,7 +31,7 @@
                                             @foreach($lista as $usuario)
                                                 <tr>
                                                     <th scope="row">{{$usuario->id}}</th>
-                                                    <td>{{$usuario->name}}</td>
+                                                    <td>{{$usuario->nome_grupo}}</td>
                                                     <td>{{$usuario->cpf}}</td>
                                                     <td>{{$usuario->celular}}</td>
                                                     <td>{{$usuario->email}}</td>

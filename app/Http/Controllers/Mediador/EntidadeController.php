@@ -6,7 +6,7 @@
  * Time: 12:31
  */
 
-namespace App\Http\Controllers\Rotary;
+namespace App\Http\Controllers\mediador;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\Entidades\EntidadeRepository;

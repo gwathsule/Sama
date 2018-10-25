@@ -9,7 +9,7 @@ class Mediador extends Model
 {
     protected $fillable = [
         'user_id', 'name', 'email', 'cpf', 'cnpj', 'celular', 'telefone', 'nome_grupo', 'nome_responsavel',
-        'quatidade_membros', 'situacao'
+        'quantidade_membros', 'situacao'
     ];
 
     public function getSituacaoAttribute($value)
